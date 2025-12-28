@@ -1,0 +1,26 @@
+[2025-12-28 14:55:14,958] INFO | cold_start | Cold start begun.
+[2025-12-28 14:55:15,728] INFO | gameweeks | Discovered gameweeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+[2025-12-28 14:55:15,731] INFO | cold_start | Fetching range 1 -> 17
+[2025-12-28 14:55:15,731] INFO | events | Fetching event 1
+[2025-12-28 14:55:16,292] INFO | events | Fetching event 2
+[2025-12-28 14:55:16,846] INFO | events | Fetching event 3
+[2025-12-28 14:55:17,370] INFO | events | Fetching event 4
+[2025-12-28 14:55:17,930] INFO | events | Fetching event 5
+[2025-12-28 14:55:18,523] INFO | events | Fetching event 6
+[2025-12-28 14:55:19,089] INFO | events | Fetching event 7
+[2025-12-28 14:55:19,612] INFO | events | Fetching event 8
+[2025-12-28 14:55:20,212] INFO | events | Fetching event 9
+[2025-12-28 14:55:20,752] INFO | events | Fetching event 10
+[2025-12-28 14:55:21,334] INFO | events | Fetching event 11
+[2025-12-28 14:55:21,916] INFO | events | Fetching event 12
+[2025-12-28 14:55:22,490] INFO | events | Fetching event 13
+[2025-12-28 14:55:23,035] INFO | events | Fetching event 14
+[2025-12-28 14:55:23,586] INFO | events | Fetching event 15
+[2025-12-28 14:55:24,133] INFO | events | Fetching event 16
+[2025-12-28 14:55:24,741] INFO | events | Fetching event 17
+[2025-12-28 14:55:25,313] INFO | events | Fetched 17 events total.
+[2025-12-28 14:55:25,441] INFO | cold_start | Written 17 events into Data/events_raw.ndjson
+[2025-12-28 14:55:25,443] INFO | cold_start | Cold start complete. Last event set to 17
+[2025-12-28 14:55:37,244] INFO | incremental | Incremental run started.
+[2025-12-28 14:55:38,226] INFO | gameweeks | Discovered gameweeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+[2025-12-28 14:55:38,229] INFO | incremental | Nothing new. All caught up 😴
