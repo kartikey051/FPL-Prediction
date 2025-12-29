@@ -177,3 +177,4 @@ if __name__ == "__main__":
         build_fact_table()
     except Exception:
         logger.exception("Fact table build failed")
+
