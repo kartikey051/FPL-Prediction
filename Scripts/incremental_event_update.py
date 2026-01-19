@@ -8,6 +8,7 @@ from Api_calls.get_available_gameweeks import (
 
 from Utils.state import load_last_event, save_last_event
 from Utils.logging_config import get_logger
+from Utils.db import upsert_events
 from Exceptions.api_errors import WriteFileError
 
 OUTPUT_FILE = "Data/events_raw.ndjson"
@@ -39,6 +40,9 @@ def append_record(record):
         with open(OUTPUT_FILE, "a", encoding="utf-8") as f:
             f.write(json.dumps(record))
             f.write("\n")
+
+        # Also upsert into MySQL
+        upsert_events([record])
 
     except Exception as e:
         logger.error(f"Append failed: {e}")
