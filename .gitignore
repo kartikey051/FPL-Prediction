@@ -3,5 +3,6 @@ scraper_errors.log
 fbref_premier_league_data_insider01
 Data
 state
-logs
+logs/
+fbref_player_match_logs/
 __pycache__

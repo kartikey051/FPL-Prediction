@@ -13,4 +13,15 @@ Step 4 : run the program ...
 5. WRITE DISCRIPTIVE AND GOOd COMMIT MESSAGES 
 6. do not push data files to github in case of making of one add it to a gitignore file 
 
+
+DAGS:-
+events_cold_start(run once on setup)
+incremental_updates(runs weekly)
+player_snapshots->player_history_dump->ingest_fixture->build_fact_table
+
+
+
+
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!
+
+

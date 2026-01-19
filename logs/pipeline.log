@@ -2753,3 +2753,29 @@ KeyError: 'team_id'
 [2025-12-28 20:54:33,390] INFO | fact_table | Attached team and opponent names
 [2025-12-28 20:54:35,084] INFO | fact_table | Saved fact table: data/fact_player_gameweeks.csv rows=13392
 [2025-12-28 20:54:35,109] INFO | fact_table | Fact table build complete
+[2026-01-19 17:09:22,305] INFO | cold_start | Cold start begun.
+[2026-01-19 17:09:23,107] INFO | gameweeks | Discovered gameweeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]
+[2026-01-19 17:09:23,110] INFO | cold_start | Fetching range 1 -> 21
+[2026-01-19 17:09:23,111] INFO | events | Fetching event 1
+[2026-01-19 17:09:23,619] INFO | events | Fetching event 2
+[2026-01-19 17:09:24,124] INFO | events | Fetching event 3
+[2026-01-19 17:09:24,647] INFO | events | Fetching event 4
+[2026-01-19 17:09:25,130] INFO | events | Fetching event 5
+[2026-01-19 17:09:25,629] INFO | events | Fetching event 6
+[2026-01-19 17:09:26,136] INFO | events | Fetching event 7
+[2026-01-19 17:09:26,637] INFO | events | Fetching event 8
+[2026-01-19 17:09:27,143] INFO | events | Fetching event 9
+[2026-01-19 17:09:27,655] INFO | events | Fetching event 10
+[2026-01-19 17:09:28,154] INFO | events | Fetching event 11
+[2026-01-19 17:09:28,674] INFO | events | Fetching event 12
+[2026-01-19 17:09:29,180] INFO | events | Fetching event 13
+[2026-01-19 17:09:29,691] INFO | events | Fetching event 14
+[2026-01-19 17:09:30,197] INFO | events | Fetching event 15
+[2026-01-19 17:09:30,715] INFO | events | Fetching event 16
+[2026-01-19 17:09:31,239] INFO | events | Fetching event 17
+[2026-01-19 17:09:31,757] INFO | events | Fetching event 18
+[2026-01-19 17:09:32,278] INFO | events | Fetching event 19
+[2026-01-19 17:09:32,788] INFO | events | Fetching event 20
+[2026-01-19 17:09:33,260] INFO | events | Fetching event 21
+[2026-01-19 17:09:33,770] INFO | events | Fetched 21 events total.
+[2026-01-19 17:09:33,782] ERROR | cold_start | Cold start write failed: Data/events_raw.ndjson already exists. Cold start should run only on an empty system.
