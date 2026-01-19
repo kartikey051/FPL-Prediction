@@ -5,6 +5,7 @@ from Api_calls.events import fetch_events_range
 from Api_calls.get_available_gameweeks import get_available_gameweeks
 from Utils.state import save_last_event
 from Utils.logging_config import get_logger
+from Utils.db import upsert_events
 from Exceptions.api_errors import WriteFileError
 
 OUTPUT_FILE = "Data/events_raw.ndjson"
@@ -28,6 +29,10 @@ def write_records(records):
                 f.write("\n")
 
         logger.info(f"Written {len(records)} events into {OUTPUT_FILE}")
+
+        # Also persist into the database (table will be created if it does not exist)
+        upsert_events(records)
+        logger.info("Persisted cold start events into MySQL.")
 
     except Exception as e:
         logger.error(f"Cold start write failed: {e}")
