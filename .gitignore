@@ -6,3 +6,4 @@ state
 logs/
 fbref_player_match_logs/
 __pycache__
+.env
