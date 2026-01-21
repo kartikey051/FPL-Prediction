@@ -16,3 +16,7 @@ logcsv/
 fbref_player_match_logs/
 fbref_premier_player_data_insider01/
 fbref_player_match_logs/
+logs/
+fbref_player_match_logs/
+__pycache__
+.env
