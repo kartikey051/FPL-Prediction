@@ -5,3 +5,14 @@ Data
 state
 logs
 __pycache__
+# logs
+*.log
+logs/
+logcsv/
+*.csv
+
+# notebooks temp
+.ipynb_checkpoints/
+fbref_player_match_logs/
+fbref_premier_player_data_insider01/
+fbref_player_match_logs/
