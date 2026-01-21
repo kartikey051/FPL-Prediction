@@ -1,5 +1,3 @@
-
-
 # FPL-Prediction
 ## SETTING UP THE CODEBASE
 Step 1 : clone the git repository inside a venv environment 
@@ -14,11 +12,5 @@ Step 4 : run the program ...
 4. any new third party dependencies added to the project should always be added in the requirement.txt 
 5. WRITE DISCRIPTIVE AND GOOd COMMIT MESSAGES 
 6. do not push data files to github in case of making of one add it to a gitignore file 
-
-
-DAGS:-
-events_cold_start(run once on setup)
-incremental_updates(runs weekly)
-player_snapshots->player_history_dump->ingest_fixture->build_fact_table
 
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!

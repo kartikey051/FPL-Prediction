@@ -38,6 +38,7 @@ def write_records(records):
         logger.error(f"Cold start write failed: {e}")
         raise
 
+
 if __name__ == "__main__":
     logger.info("Cold start begun.")
 
