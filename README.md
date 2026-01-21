@@ -19,9 +19,6 @@ events_cold_start(run once on setup)
 incremental_updates(runs weekly)
 player_snapshots->player_history_dump->ingest_fixture->build_fact_table
 
-
-
-
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!
 
 
