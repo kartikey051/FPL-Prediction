@@ -145,10 +145,18 @@ def select_fact_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df[existing]
 
 
+from Utils.db import upsert_dataframe
+
 def save_fact_table(df: pd.DataFrame):
     try:
         df.to_csv(OUTPUT_FILE, index=False)
         logger.info(f"Saved fact table: {OUTPUT_FILE} rows={len(df)}")
+        
+        # Upsert to DB
+        # Assuming player_id and event (gameweek) form a unique key for a player's performance in a GW
+        upsert_dataframe(df, "fact_player_gameweeks", primary_keys=["player_id", "event"])
+        logger.info(f"Upserted fact table to DB: rows={len(df)}")
+        
     except Exception:
         logger.exception("Failed saving fact table")
         raise
