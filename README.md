@@ -17,8 +17,8 @@ Step 4 : run the program ...
 
 
 DAGS:-
-events_cold_start(run once on setup)
-incremental_updates(runs weekly)
+events_cold_start(run once on setup) "python -m Scripts.events_cold_start"
+incremental_updates(runs weekly) "python -m Scripts.incremental_event_update"
 player_snapshots->player_history_dump->ingest_fixture->build_fact_table
 
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!
