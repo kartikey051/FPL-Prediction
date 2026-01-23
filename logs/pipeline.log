@@ -7428,3 +7428,30 @@ Symbols not available. Dumping unresolved backtrace:
 [2026-01-23 15:46:04,215] INFO | db | Processed batch 97 for understat_roster_metrics
 [2026-01-23 15:46:04,216] INFO | db | Successfully upserted 96091 rows into understat_roster_metrics.
 [2026-01-23 15:46:04,322] INFO | ingest_understat_roster | Upserted 96091 rows from Data/kaggle/roster\understat_roster_1524.csv
+[2026-01-23 15:54:33,796] INFO | cold_start | Cold start begun.
+[2026-01-23 15:54:34,960] INFO | gameweeks | Discovered gameweeks: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+[2026-01-23 15:54:34,964] INFO | cold_start | Fetching range 1 -> 22
+[2026-01-23 15:54:34,965] INFO | events | Fetching event 1
+[2026-01-23 15:54:35,705] INFO | events | Fetching event 2
+[2026-01-23 15:54:36,462] INFO | events | Fetching event 3
+[2026-01-23 15:54:37,266] INFO | events | Fetching event 4
+[2026-01-23 15:54:38,076] INFO | events | Fetching event 5
+[2026-01-23 15:54:38,843] INFO | events | Fetching event 6
+[2026-01-23 15:54:39,667] INFO | events | Fetching event 7
+[2026-01-23 15:54:40,403] INFO | events | Fetching event 8
+[2026-01-23 15:54:41,288] INFO | events | Fetching event 9
+[2026-01-23 15:54:42,048] INFO | events | Fetching event 10
+[2026-01-23 15:54:42,944] INFO | events | Fetching event 11
+[2026-01-23 15:54:43,968] INFO | events | Fetching event 12
+[2026-01-23 15:54:44,748] INFO | events | Fetching event 13
+[2026-01-23 15:54:45,580] INFO | events | Fetching event 14
+[2026-01-23 15:54:46,339] INFO | events | Fetching event 15
+[2026-01-23 15:54:47,089] INFO | events | Fetching event 16
+[2026-01-23 15:54:47,897] INFO | events | Fetching event 17
+[2026-01-23 15:54:48,686] INFO | events | Fetching event 18
+[2026-01-23 15:54:49,504] INFO | events | Fetching event 19
+[2026-01-23 15:54:50,255] INFO | events | Fetching event 20
+[2026-01-23 15:54:51,055] INFO | events | Fetching event 21
+[2026-01-23 15:54:51,849] INFO | events | Fetching event 22
+[2026-01-23 15:54:52,619] INFO | events | Fetched 22 events total.
+[2026-01-23 15:54:52,620] ERROR | cold_start | Cold start write failed: Data/events_raw.ndjson already exists. Cold start should run only on an empty system.
