@@ -9,3 +9,11 @@ ipykernel
 mysql-connector-python
 python-dotenv
 kaggle
+fastapi
+uvicorn
+jinja2
+python-multipart
+passlib[bcrypt]
+python-jose[cryptography]
+pydantic-settings
+email-validator
