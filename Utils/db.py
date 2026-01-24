@@ -166,7 +166,7 @@ def _map_dtype_to_mysql_type(dtype) -> str:
         return "BOOLEAN"
     if "datetime" in str_type:
         return "DATETIME"
-    return "TEXT"
+    return "VARCHAR(255)"
 
 
 def create_table_from_df(conn, table_name: str, df: pd.DataFrame, primary_keys: List[str] = None):
@@ -263,3 +263,46 @@ def upsert_dataframe(df: pd.DataFrame, table_name: str, primary_keys: List[str] 
             logger.error(f"Failed to upsert dataframe into {table_name}: {e}")
             raise DBWriteError(f"Could not upsert dataframe into {table_name}: {e}") from e
 
+
+def execute_query(query: str, params: tuple = None, fetch: bool = True):
+    """
+    Execute a SQL query and return results.
+    
+    Args:
+        query: SQL query string
+        params: Query parameters
+        fetch: Whether to fetch results
+    
+    Returns:
+        List of dictionaries for SELECT queries, or affected row count
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor(dictionary=True)
+        try:
+            cursor.execute(query, params or ())
+            
+            if fetch:
+                results = cursor.fetchall()
+                return results
+            else:
+                conn.commit()
+                return cursor.rowcount
+        finally:
+            cursor.close()
+
+
+def execute_write(query: str, params: tuple = None) -> int:
+    """
+    Execute a write query (INSERT, UPDATE, DELETE).
+    
+    Returns:
+        Last inserted ID for INSERT, or affected row count
+    """
+    with get_connection() as conn:
+        cursor = conn.cursor()
+        try:
+            cursor.execute(query, params or ())
+            conn.commit()
+            return cursor.lastrowid if cursor.lastrowid else cursor.rowcount
+        finally:
+            cursor.close()
