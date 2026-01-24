@@ -13,5 +13,7 @@ Step 4 : run the program ...
 5. WRITE DISCRIPTIVE AND GOOd COMMIT MESSAGES 
 6. do not push data files to github in case of making of one add it to a gitignore file 
 
+DAG:-
+cold start -> incremental update ->get fixtures -> player snapshots -> player history dump -> build fact table
 
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!

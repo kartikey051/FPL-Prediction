@@ -8,3 +8,4 @@ numpy
 ipykernel
 mysql-connector-python
 python-dotenv
+kaggle
