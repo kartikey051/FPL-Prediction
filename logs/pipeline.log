@@ -15218,3 +15218,16 @@ Exceptions.api_errors.DBWriteError: Could not create table fpl_season_players: 1
 [2026-01-24 23:25:02,007] INFO | db | Successfully upserted 27605 rows into fpl_player_gameweeks.
 [2026-01-24 23:25:02,045] INFO | ingest_fpl_github | Completed season 2024-25
 [2026-01-24 23:25:02,046] INFO | ingest_fpl_github | FPL GitHub ingestion completed successfully.
+[2026-01-24 23:47:14,420] INFO | ingest_fpl_github | Starting FPL GitHub ingestion...
+[2026-01-24 23:47:14,421] INFO | ingest_fpl_github | Processing season 2016-17...
+[2026-01-24 23:47:14,422] INFO | github_fetch | Fetching from GitHub: https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2016-17/teams.csv
+[2026-01-24 23:47:16,024] WARNING | retry | Attempt 1 failed: Client error 404 while requesting https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2016-17/teams.csv
+[2026-01-24 23:47:16,038] INFO | retry | Retrying in 2.24s...
+[2026-01-24 23:47:18,994] WARNING | retry | Attempt 2 failed: Client error 404 while requesting https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data/2016-17/teams.csv
+[2026-01-24 23:47:18,994] INFO | retry | Retrying in 4.61s...
+[2026-01-24 23:49:04,292] INFO | main | Starting FPL Dashboard application...
+[2026-01-24 23:49:04,562] INFO | user_model | Users table ensured
+[2026-01-24 23:49:04,563] INFO | main | Database tables initialized
+[2026-01-24 23:50:17,048] INFO | user_model | Created user: kaka_patil with id: 3
+[2026-01-24 23:50:17,049] INFO | auth_service | User registered successfully: kaka_patil
+[2026-01-24 23:50:28,602] INFO | auth_service | User authenticated: kaka_patil
