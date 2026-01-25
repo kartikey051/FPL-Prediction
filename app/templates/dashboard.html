@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FPL Dashboard - Football Analytics and Insights">
+    <title>Dashboard | FPL Analytics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="dashboard-page">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <span class="logo-icon">⚽</span>
+            <span class="logo-text">FPL Dashboard</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="nav-item active">
+                <a href="#" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    <span>Overview</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#trends" class="nav-link">
+                    <i class="bi bi-graph-up"></i>
+                    <span>Trends</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#teams" class="nav-link">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Teams</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#players" class="nav-link">
+                    <i class="bi bi-person-badge"></i>
+                    <span>Top Players</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <i class="bi bi-person-circle"></i>
+                <span id="usernameDisplay">User</span>
+            </div>
+            <button class="btn btn-outline-light btn-sm w-100 mt-2" id="logoutBtn">
+                <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Football Analytics Dashboard</h1>
+                <p class="text-muted mb-0">Premier League Performance Insights</p>
+            </div>
+            <div class="header-right">
+                <select id="teamFilter" class="form-select">
+                    <option value="">All Teams</option>
+                </select>
+            </div>
+        </header>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-container">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Loading dashboard data...</p>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div id="dashboardContent" class="d-none">
+            <!-- KPI Cards -->
+            <section class="kpi-section">
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="kpi-card gradient-purple">
+                            <div class="kpi-icon"><i class="bi bi-people-fill"></i></div>
+                            <div class="kpi-content">
+                                <h3 id="totalPlayers">0</h3>
+                                <p>Total Players</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="kpi-card gradient-blue">
+                            <div class="kpi-icon"><i class="bi bi-shield-fill"></i></div>
+                            <div class="kpi-content">
+                                <h3 id="totalTeams">0</h3>
+                                <p>Teams</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="kpi-card gradient-green">
+                            <div class="kpi-icon"><i class="bi bi-trophy-fill"></i></div>
+                            <div class="kpi-content">
+                                <h3 id="totalGoals">0</h3>
+                                <p>Total Goals</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="kpi-card gradient-orange">
+                            <div class="kpi-icon"><i class="bi bi-star-fill"></i></div>
+                            <div class="kpi-content">
+                                <h3 id="avgPoints">0</h3>
+                                <p>Avg Points/Player</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts Row -->
+            <section class="charts-section mt-4">
+                <div class="row g-4">
+                    <!-- Points Trend Chart -->
+                    <div class="col-lg-8">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-graph-up-arrow"></i> Points Trend by Gameweek</h5>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="trendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Position Distribution -->
+                    <div class="col-lg-4">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-pie-chart-fill"></i> Players by Position</h5>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="positionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Second Row -->
+            <section class="charts-section mt-4">
+                <div class="row g-4">
+                    <!-- Goals by Team -->
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-bar-chart-fill"></i> Goals by Team (Top 10)</h5>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="teamGoalsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Top Players -->
+                    <div class="col-lg-6">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-award-fill"></i> Top Performing Players</h5>
+                            </div>
+                            <div class="chart-body table-container">
+                                <table class="table table-dark table-hover" id="topPlayersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Player</th>
+                                            <th>Team</th>
+                                            <th>Points</th>
+                                            <th>Goals</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Goals & Assists Trend -->
+            <section class="charts-section mt-4 mb-4">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-activity"></i> Goals & Assists Trend</h5>
+                            </div>
+                            <div class="chart-body">
+                                <canvas id="goalsAssistsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+
+</html>
