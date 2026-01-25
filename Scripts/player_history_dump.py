@@ -9,6 +9,8 @@ logger = get_logger("player_history_dump")
 OUTPUT_FILE = "Data/player_history.ndjson"
 
 
+from Utils.db import upsert_dataframe
+
 def append_records(df):
     os.makedirs("Data", exist_ok=True)
 
@@ -18,6 +20,13 @@ def append_records(df):
         lines=True,
         mode="a",
     )
+    
+    # Upsert to MySQL
+    # Primary key should be player_id + fixture combination or something unique for history.
+    # The API output uses 'element' as player_id and 'fixture' as fixture_id. 
+    # Let's ensure we have a unique key.
+    if not df.empty and "element" in df.columns and "fixture" in df.columns:
+         upsert_dataframe(df, "player_history", primary_keys=["element", "fixture"])
 
 
 if __name__ == "__main__":

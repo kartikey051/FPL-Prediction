@@ -1,6 +1,7 @@
 import os
 from Api_calls.players import fetch_player_snapshot
 from Utils.logging_config import get_logger
+from Utils.db import upsert_dataframe
 
 logger = get_logger("player_snapshot")
 
@@ -19,7 +20,14 @@ if __name__ == "__main__":
         teams.to_csv(f"{OUTPUT_DIR}/teams.csv", index=False)
         positions.to_csv(f"{OUTPUT_DIR}/positions.csv", index=False)
 
-        logger.info("Player snapshot written successfully")
+        logger.info("Player snapshot written to CSV successfully")
+
+        # Upsert to DB
+        upsert_dataframe(players, "players", primary_keys=["id"])
+        upsert_dataframe(teams, "teams", primary_keys=["id"])
+        upsert_dataframe(positions, "positions", primary_keys=["id"])
+
+        logger.info("Player snapshot upserted to DB successfully")
 
     except Exception as e:
         logger.exception(f"player_snapshot failed: {e}")

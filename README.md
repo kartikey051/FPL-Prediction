@@ -1,5 +1,3 @@
-
-
 # FPL-Prediction
 ## SETTING UP THE CODEBASE
 Step 1 : clone the git repository inside a venv environment 
@@ -15,10 +13,16 @@ Step 4 : run the program ...
 5. WRITE DISCRIPTIVE AND GOOd COMMIT MESSAGES 
 6. do not push data files to github in case of making of one add it to a gitignore file 
 
+DAG:-
+cold start -> incremental update ->get fixtures -> player snapshots -> player history dump -> build fact table
 
+<<<<<<< HEAD
 DAGS:-
 events_cold_start(run once on setup) "python -m Scripts.events_cold_start"
 incremental_updates(runs weekly) "python -m Scripts.incremental_event_update"
 player_snapshots->player_history_dump->ingest_fixture->build_fact_table
 
 ###### ANDHERA KAYAM RAHE !!!!!!!!!!!!
+=======
+###### ANDHERA KAYAM RAHE !!!!!!!!!!!!
+>>>>>>> 15717f64f338bb23d256439bb20344f9241e97e8

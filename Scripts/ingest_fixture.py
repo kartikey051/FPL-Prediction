@@ -1,5 +1,7 @@
 import os
 import csv
+import pandas as pd
+
 
 from Utils.logging_config import get_logger
 from Api_calls.fixtures import fetch_fixtures_for_gameweek
@@ -46,10 +48,12 @@ def get_last_fixture_gw() -> int:
         return 0
 
 
+from Utils.db import upsert_dataframe
+
 def write_fixtures(gw: int, fixtures: list):
     """
-    Append fixtures to CSV.
-    Header written only once.
+    Append fixtures to CSV and upsert to DB.
+    Header written only once for CSV.
     """
 
     if not fixtures:
@@ -61,6 +65,7 @@ def write_fixtures(gw: int, fixtures: list):
     rows = [{col: f.get(col) for col in COLUMNS} for f in fixtures]
 
     try:
+        # Write to CSV
         with open(OUTPUT_FILE, "a", newline="", encoding="utf-8") as f:
             writer = csv.DictWriter(f, fieldnames=COLUMNS)
 
@@ -69,10 +74,15 @@ def write_fixtures(gw: int, fixtures: list):
 
             writer.writerows(rows)
 
-        logger.info(f"Wrote {len(rows)} fixtures for GW {gw}")
+        logger.info(f"Wrote {len(rows)} fixtures for GW {gw} to CSV")
+
+        # Upsert to DB
+        df = pd.DataFrame(rows)
+        upsert_dataframe(df, "fixtures", primary_keys=["id"])
+        logger.info(f"Upserted {len(rows)} fixtures for GW {gw} to DB")
 
     except Exception:
-        logger.exception("Failed writing fixtures CSV")
+        logger.exception("Failed writing fixtures")
         raise
 
 

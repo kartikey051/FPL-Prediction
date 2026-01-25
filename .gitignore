@@ -3,7 +3,18 @@ scraper_errors.log
 fbref_premier_league_data_insider01
 Data
 state
-logs/
-fbref_player_match_logs/
+logs
 __pycache__
+# logs
+*.log
+logs/
+logcsv/
+*.csv
+
+# notebooks temp
+.ipynb_checkpoints/
+fbref_player_match_logs/
+fbref_premier_player_data_insider01/
+fbref_player_match_logs/
+
 .env
