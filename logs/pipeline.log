@@ -15231,3 +15231,202 @@ Exceptions.api_errors.DBWriteError: Could not create table fpl_season_players: 1
 [2026-01-24 23:50:17,048] INFO | user_model | Created user: kaka_patil with id: 3
 [2026-01-24 23:50:17,049] INFO | auth_service | User registered successfully: kaka_patil
 [2026-01-24 23:50:28,602] INFO | auth_service | User authenticated: kaka_patil
+[2026-01-26 00:55:37,002] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 00:55:37,848] INFO | user_model | Users table ensured
+[2026-01-26 00:55:37,849] INFO | main | Database tables initialized
+[2026-01-26 00:56:21,404] WARNING | auth_service | Login failed: invalid password for kaka_patil
+[2026-01-26 00:56:27,654] WARNING | auth_service | Login failed: invalid password for kaka_patil
+[2026-01-26 00:56:35,384] INFO | auth_service | User authenticated: kaka_patil
+[2026-01-26 00:56:54,664] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:54,666] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:54,732] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:56:54,734] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:56:54,787] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:54,789] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:54,845] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:56:54,847] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:56:59,383] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:59,385] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:59,443] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:59,445] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:56:59,508] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:56:59,510] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:56:59,557] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:56:59,559] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:02,221] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:02,223] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:02,288] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:02,290] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:02,336] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:02,339] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:02,388] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:02,390] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:04,871] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:04,873] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:04,933] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:04,937] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:04,996] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:04,998] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:05,055] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:05,057] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:17,003] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:17,006] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:17,068] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:17,070] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:17,129] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:17,131] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:17,200] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:17,203] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:19,691] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:19,693] ERROR | dashboard_service | Error summary_stats: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:19,756] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:19,759] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:19,818] ERROR | db_session | Database connection failed: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:19,822] ERROR | dashboard_service | Error distributions: 1052 (23000): Column 'season' in where clause is ambiguous
+[2026-01-26 00:57:19,875] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:19,877] ERROR | dashboard_service | Error top_players: 1054 (42S22): Unknown column 'f.player_name' in 'field list'
+[2026-01-26 00:57:25,040] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:25,042] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 00:57:41,058] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'opponent_name' in 'field list'
+[2026-01-26 00:57:41,060] ERROR | dashboard_service | Error player_trends: 1054 (42S22): Unknown column 'opponent_name' in 'field list'
+[2026-01-26 01:10:23,839] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:23,845] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:33,564] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:33,567] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:35,945] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:35,948] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:38,265] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:10:38,267] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:13:57,414] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:13:57,419] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:14:01,893] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:14:01,895] ERROR | dashboard_service | Error trends: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:31:40,439] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 01:31:41,153] INFO | user_model | Users table ensured
+[2026-01-26 01:31:41,154] INFO | main | Database tables initialized
+[2026-01-26 01:44:33,740] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 01:44:34,288] INFO | user_model | Users table ensured
+[2026-01-26 01:44:34,289] INFO | main | Database tables initialized
+[2026-01-26 01:44:52,470] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:52,473] ERROR | dashboard_service | Summary Error (2021-22): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:52,650] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:52,652] ERROR | dashboard_service | Trends Error (2021-22): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:57,108] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:57,111] ERROR | dashboard_service | Summary Error (2023-24): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:57,310] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:44:57,312] ERROR | dashboard_service | Trends Error (2023-24): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:00,262] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:00,264] ERROR | dashboard_service | Summary Error (2017-18): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:00,440] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:00,442] ERROR | dashboard_service | Trends Error (2017-18): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:05,410] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:05,412] ERROR | dashboard_service | Trends Error (2016-17): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:05,499] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:05,501] ERROR | dashboard_service | Summary Error (2016-17): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:11,859] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:11,861] ERROR | dashboard_service | Summary Error (2017-18): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:11,977] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:11,979] ERROR | dashboard_service | Trends Error (2017-18): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:16,875] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:16,877] ERROR | dashboard_service | Summary Error (2016-17): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:17,036] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 01:45:17,039] ERROR | dashboard_service | Trends Error (2016-17): 1054 (42S22): Unknown column 'team_id' in 'where clause'
+[2026-01-26 02:08:35,125] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:08:35,677] INFO | user_model | Users table ensured
+[2026-01-26 02:08:35,678] INFO | main | Database tables initialized
+[2026-01-26 02:10:51,760] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:10:52,022] INFO | user_model | Users table ensured
+[2026-01-26 02:10:52,023] INFO | main | Database tables initialized
+[2026-01-26 02:11:07,710] INFO | auth_service | User authenticated: kaka_patil
+[2026-01-26 02:11:17,635] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:17,638] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 4): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:17,824] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:17,827] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 4): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:22,584] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:22,587] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 6): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:22,786] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:22,788] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 6): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:25,670] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:25,672] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 8): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:25,823] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:11:25,825] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 8): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:25,151] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:25,153] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 15): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:25,288] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:25,291] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 15): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:29,795] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:29,797] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 15): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:29,931] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:29,933] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 15): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:32,725] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:32,727] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 1): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:32,851] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:32,853] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 1): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:34,928] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:34,931] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 2): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:35,051] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:35,053] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 2): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:36,795] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:36,798] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 7): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:36,929] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:36,932] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 7): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:39,750] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:39,752] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 11): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:39,974] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:39,976] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 11): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:43,512] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:12:43,515] ERROR | dashboard_service | Team PID Resolution Failed (2024-25, 11): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:13:09,703] ERROR | dashboard_service | Matrix Fault (2021-22): 'filter_season'
+[2026-01-26 02:13:16,951] ERROR | dashboard_service | Matrix Fault (2021-22): 'filter_season'
+[2026-01-26 02:13:20,933] ERROR | dashboard_service | Matrix Fault (2021-22): 'filter_season'
+[2026-01-26 02:13:24,644] ERROR | dashboard_service | Matrix Fault (2024-25): 'filter_season'
+[2026-01-26 02:13:27,015] ERROR | dashboard_service | Matrix Fault (2024-25): 'filter_season'
+[2026-01-26 02:13:28,884] ERROR | dashboard_service | Matrix Fault (2019-20): 'filter_season'
+[2026-01-26 02:13:31,261] ERROR | dashboard_service | Matrix Fault (2016-17): 'filter_season'
+[2026-01-26 02:13:33,705] ERROR | dashboard_service | Matrix Fault (2016-17): 'filter_season'
+[2026-01-26 02:14:55,043] ERROR | dashboard_service | Matrix Fault (2024-25): 'filter_season'
+[2026-01-26 02:14:56,693] ERROR | dashboard_service | Standing Fault (2024-25): 'filter_season'
+[2026-01-26 02:15:04,329] ERROR | dashboard_service | Standing Fault (2023-24): 'filter_season'
+[2026-01-26 02:15:06,160] ERROR | dashboard_service | Standing Fault (2021-22): 'filter_season'
+[2026-01-26 02:15:08,131] ERROR | dashboard_service | Standing Fault (2018-19): 'filter_season'
+[2026-01-26 02:15:10,716] ERROR | dashboard_service | Standing Fault (2017-18): 'filter_season'
+[2026-01-26 02:15:13,421] ERROR | dashboard_service | Standing Fault (2016-17): 'filter_season'
+[2026-01-26 02:15:20,717] ERROR | dashboard_service | Matrix Fault (2016-17): 'filter_season'
+[2026-01-26 02:43:04,397] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:43:05,076] INFO | user_model | Users table ensured
+[2026-01-26 02:43:05,076] INFO | main | Database tables initialized
+[2026-01-26 02:43:31,187] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:31,190] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=2): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:31,335] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:31,338] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=2): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:34,171] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:34,173] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=3): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:34,369] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:34,372] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=3): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:43:45,588] ERROR | db_session | Database connection failed: 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:43:45,591] ERROR | dashboard_service | Team squad error (2023-24): 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:44:26,160] ERROR | db_session | Database connection failed: 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:44:26,163] ERROR | dashboard_service | Team squad error (2023-24): 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:44:30,665] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:44:30,667] ERROR | dashboard_service | Team squad error (2024-25): 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:44:32,811] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:44:32,813] ERROR | dashboard_service | Team squad error (2024-25): 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:44:43,317] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:44:43,320] ERROR | dashboard_service | Global search error (2024-25): 1054 (42S22): Unknown column 'p.player_id' in 'field list'
+[2026-01-26 02:45:02,302] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:45:02,305] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=1): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:45:04,264] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:45:04,266] ERROR | dashboard_service | Team PID resolution failed (2024-25, team=5): 1054 (42S22): Unknown column 'player_id' in 'field list'
+[2026-01-26 02:52:00,898] ERROR | db_session | Database connection failed: 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:52:00,901] ERROR | dashboard_service | Team squad error (2022-23): 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:52:03,890] ERROR | db_session | Database connection failed: 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:52:03,903] ERROR | dashboard_service | Team squad error (2022-23): 1055 (42000): Expression #10 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'fpladmin.us.xg' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+[2026-01-26 02:54:27,063] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:54:27,393] INFO | user_model | Users table ensured
+[2026-01-26 02:54:27,394] INFO | main | Database tables initialized
+[2026-01-26 02:54:58,516] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:54:58,655] INFO | user_model | Users table ensured
+[2026-01-26 02:54:58,656] INFO | main | Database tables initialized
+[2026-01-26 02:55:40,321] INFO | main | Starting FPL Dashboard application...
+[2026-01-26 02:55:40,522] INFO | user_model | Users table ensured
+[2026-01-26 02:55:40,523] INFO | main | Database tables initialized
