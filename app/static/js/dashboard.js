@@ -1,5 +1,5 @@
 /**
- * FPL Anti-Gravity Dashboard Logic v2.0
+ * FPL Data Dashboard Logic
  * Features: Canonical Trends, Understat Fusion, Decoupled Search
  */
 
@@ -52,11 +52,11 @@ function setView(viewId) {
     document.getElementById('searchContainer').classList.toggle('d-none', viewId !== 'discovery');
 
     const titles = {
-        overview: ['Fleet Analytics', 'Anti-Gravity Performance Stream'],
-        trends: ['Trajectory Analysis', 'Gap-free performance volatility tracking'],
-        discovery: ['Global Intelligence', 'Decoupled player discovery & lookup'],
-        teams: ['Squad Dynamics', 'Matrix-level team productivity insights'],
-        standings: ['Sector Rankings', 'Performance-based league distribution']
+        overview: ['Dashboard Overview', 'Key Performance Indicators'],
+        trends: ['Performance Trends', 'Gap-free volatility tracking'],
+        discovery: ['Player Discovery', 'Global lookup across all teams'],
+        teams: ['Squad Analytics', 'Team productivity matrix'],
+        standings: ['League Standings', 'Performance-based table']
     };
 
     if (titles[viewId]) {
@@ -83,7 +83,7 @@ async function refreshData() {
         if (state.view === 'teams') await loadTeams();
         if (state.view === 'standings') await loadStandings();
     } catch (e) {
-        console.error("Anti-Gravity Link Failure:", e);
+        console.error("Data Link Failure:", e);
     } finally {
         loader.classList.add('d-none');
         content.classList.remove('d-none');
@@ -151,13 +151,12 @@ async function loadTeams() {
             <td><div>${p.name}</div><span class="badge bg-secondary" style="font-size:0.6rem">${p.position}</span></td>
             <td><span class="metric-value">${p.total_points}</span></td>
             <td><small>${p.goals}G / ${p.assists}A</small></td>
-            <td>£${p.now_cost}m</td>
+            <td>${p.now_cost.toFixed(1)}</td>
             <td class="row-understat">
-                <span class="metric-value text-info">${p.xG.toFixed(2)}</span>
-                <span class="text-muted small">/ ${p.xA.toFixed(2)}</span>
+                <span class="metric-value text-info">${(p.xG !== null && p.xG > 0) ? p.xG.toFixed(2) : '—'}</span>
+                <span class="text-muted small">/ ${(p.xA !== null && p.xA > 0) ? p.xA.toFixed(2) : '—'}</span>
             </td>
-            <td class="${p.form > 5 ? 'text-success' : 'text-warning'}">${p.form}</td>
-            <td>${p.pts_per_90}</td>
+            <td>${p.pts_per_90 ? p.pts_per_90.toFixed(2) : '0.00'}</td>
         </tr>
     `).join('');
 }
@@ -174,9 +173,9 @@ async function loadStandings() {
             <td>${s.goal_diff > 0 ? '+' : ''}${s.goal_diff}</td>
             <td class="fw-bold text-info">${s.points}</td>
             <td class="row-understat text-info">
-                <span class="metric-value">${s.xG_for.toFixed(1)}</span>
-                <span class="text-muted"> vs </span>
-                <span class="metric-value text-danger">${s.xG_against.toFixed(1)}</span>
+                <span class="metric-value">${(s.xG_for !== null && s.xG_for > 0) ? s.xG_for.toFixed(1) : '—'}</span>
+                <span class="text-muted"> / </span>
+                <span class="metric-value text-danger">${(s.xG_against !== null && s.xG_against > 0) ? s.xG_against.toFixed(1) : '—'}</span>
             </td>
         </tr>
     `).join('');
@@ -196,7 +195,7 @@ window.showMetrics = async function (pid) {
         <div class="row g-2">
             <div class="col-6"><span class="metric-label">Actual Pts</span><div class="metric-value h5">${totalPoints}</div></div>
             <div class="col-6"><span class="metric-label">Expected xG</span><div class="metric-value h5 text-info">${totalXG}</div></div>
-            <div class="col-6"><span class="metric-label">Mean Form</span><div class="metric-value h5">${res.overall_form}</div></div>
+            <div class="col-6"><span class="metric-label">Mean Form</span><div class="metric-value h5">${res.overall_form || '-'}</div></div>
             <div class="col-6"><span class="metric-label">Max GW</span><div class="metric-value h5">${res.trend.length}</div></div>
         </div>
     `;
@@ -236,9 +235,21 @@ function renderTrendChart(t) {
 function renderPosDist(d) {
     const ctx = document.getElementById('positionChart').getContext('2d');
     if (state.charts.pos) state.charts.pos.destroy();
+
+    // Use actual data if available, fallback to defaults just in case
+    const labels = d.by_position.length ? d.by_position.map(p => p.position) : ['GKP', 'DEF', 'MID', 'FWD'];
+    const values = d.by_position.length ? d.by_position.map(p => p.player_count) : [0, 0, 0, 0];
+
     state.charts.pos = new Chart(ctx, {
         type: 'doughnut',
-        data: { labels: ['GKP', 'DEF', 'MID', 'FWD'], datasets: [{ data: [15, 35, 40, 10], backgroundColor: ['#7c3aed', '#3b82f6', '#10b981', '#f59e0b'], borderWidth: 0 }] },
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: ['#7c3aed', '#3b82f6', '#10b981', '#f59e0b'],
+                borderWidth: 0
+            }]
+        },
         options: { responsive: true, maintainAspectRatio: false, cutout: '80%' }
     });
 }

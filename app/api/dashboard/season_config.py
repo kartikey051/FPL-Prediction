@@ -202,32 +202,34 @@ def build_player_join(
         )
 
 
-def build_understat_join(
-    schema: SeasonSchema,
-    player_alias: str = "p",
-    understat_alias: str = "us"
-) -> Tuple[str, str]:
-    """
-    Build an understat roster metrics join if supported.
-    
-    Returns:
-        Tuple of (join_clause, select_fragment) or ("", "") if understat not supported.
-        
-    Note: 
-    - Understat joins are by player name (loose match), not ID.
-    - Select uses aggregation to satisfy GROUP BY requirements.
-    """
-    if not schema.supports_understat:
-        return ("", "")
-    
-    join = (
-        f"LEFT JOIN understat_roster_metrics {understat_alias} "
-        f"ON {understat_alias}.player = CONCAT({player_alias}.first_name, ' ', {player_alias}.second_name)"
-    )
-    # CRITICAL: Use aggregation to avoid GROUP BY violations
-    select = f"COALESCE(SUM({understat_alias}.xg), 0) as xG, COALESCE(SUM({understat_alias}.xa), 0) as xA"
-    
     return (join, select)
+
+
+def get_season_mode(season: str) -> str:
+    """
+    Determine if logic should be 'current' or 'historical'.
+    """
+    return "current" if season == CURRENT_SEASON else "historical"
+
+
+def build_standings_xg_query(season_year: int) -> str:
+    """
+    Build query to fetch Team xG stats for standings.
+    """
+    return f"""
+        SELECT 
+            team_name,
+            SUM(CASE WHEN team_h = team_name THEN h_xg ELSE a_xg END) as xG_for,
+            SUM(CASE WHEN team_h = team_name THEN a_xg ELSE h_xg END) as xG_against,
+            SUM(CASE WHEN team_h = team_name THEN h_goals ELSE a_goals END) as goals_for,
+            SUM(CASE WHEN team_h = team_name THEN a_goals ELSE h_goals END) as goals_against
+        FROM (
+            SELECT team_h as team_name, h_xg, a_xg, h_goals, a_goals FROM understat_team_metrics WHERE season = {season_year}
+            UNION ALL
+            SELECT team_a as team_name, a_xg, h_xg, a_goals, h_goals FROM understat_team_metrics WHERE season = {season_year}
+        ) all_matches
+        GROUP BY team_name
+    """
 
 
 def get_player_team_column(schema: SeasonSchema) -> str:

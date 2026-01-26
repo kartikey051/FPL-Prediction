@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="FPL Anti-Gravity Analytics - Advanced Football Insights">
-    <title>Dashboard | FPL Anti-Gravity</title>
+    <meta name="description" content="FPL Analytics Dashboard - Advanced Football Insights">
+    <title>Dashboard | FPL Analytics</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap"
         rel="stylesheet">
@@ -39,8 +39,8 @@
     <!-- Sidebar -->
     <nav class="sidebar">
         <div class="sidebar-header">
-            <span class="logo-icon">🛰️</span>
-            <span class="logo-text">Anti-Gravity</span>
+            <span class="logo-icon">📊</span>
+            <span class="logo-text">FPL Dashboard</span>
         </div>
 
         <ul class="sidebar-nav">
@@ -53,7 +53,7 @@
             <li class="nav-item" data-view="trends">
                 <a href="#trends" class="nav-link">
                     <i class="bi bi-graph-up"></i>
-                    <span>Advanced Trends</span>
+                    <span>Performance Trends</span>
                 </a>
             </li>
             <li class="nav-item" data-view="discovery">
@@ -99,7 +99,7 @@
                 <select id="seasonFilter" class="form-select w-auto">
                     <option value="2024-25">2024-25</option>
                 </select>
-                <span class="small text-muted ms-2">Context:</span>
+                <span class="small text-muted ms-2">Team:</span>
                 <select id="teamFilter" class="form-select w-auto">
                     <option value="">League-wide</option>
                 </select>
@@ -206,7 +206,7 @@
                     <div class="col-lg-4">
                         <div class="chart-card">
                             <div class="chart-header">
-                                <h5><i class="bi bi-pie-chart-fill"></i> Multi-Source Mix</h5>
+                                <h5><i class="bi bi-pie-chart-fill"></i> Position Distribution</h5>
                             </div>
                             <div class="chart-body" style="height: 350px;"><canvas id="positionChart"></canvas></div>
                         </div>
@@ -228,7 +228,7 @@
                                     <th>Player</th>
                                     <th>Team</th>
                                     <th>Total Pts</th>
-                                    <th>Form</th>
+                                    <th>Per GW</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -256,7 +256,7 @@
             <!-- VIEW: TEAMS (SQUAD ANALYTICS) -->
             <div id="view-teams" class="view-section d-none">
                 <div class="alert alert-info" id="teamSelectionHint">
-                    <i class="bi bi-info-circle"></i> Please select a context from the header context dropdown.
+                    <i class="bi bi-info-circle"></i> Please select a team from the header dropdown.
                 </div>
                 <div id="teamSquadContainer" class="d-none">
                     <div class="row g-4 mb-4">
@@ -278,13 +278,11 @@
                                 <thead>
                                     <tr>
                                         <th>Player</th>
-                                        <th>Pos</th>
                                         <th>Pts</th>
                                         <th>G/A</th>
-                                        <th>£</th>
-                                        <th class="row-understat">xG/xA</th>
-                                        <th>Form</th>
-                                        <th>Pts/90</th>
+                                        <th>Price</th>
+                                        <th class="row-understat">Expected (xG/xA)</th>
+                                        <th>Points/90</th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>

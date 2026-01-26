@@ -9,7 +9,7 @@
     --bg-secondary: #1a1a2e;
     --bg-card: rgba(26, 26, 46, 0.8);
     --text-primary: #ffffff;
-    --text-secondary: #a0a0b0;
+    --text-secondary: #d1d1e0;
     --accent-purple: #7c3aed;
     --accent-blue: #3b82f6;
     --accent-green: #10b981;
@@ -388,7 +388,7 @@ body {
 
 .kpi-content p {
     margin: 0;
-    opacity: 0.9;
+    opacity: 1;
     font-size: 0.9rem;
 }
 
