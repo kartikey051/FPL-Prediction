@@ -26,6 +26,10 @@ class TrendDataPoint(BaseModel):
     total_goals: int
     total_assists: int
     avg_minutes: float
+    
+    # Understat additions
+    total_xG: Optional[float] = 0.0
+    total_xA: Optional[float] = 0.0
 
 
 class TrendsResponse(BaseModel):
@@ -73,3 +77,96 @@ class DashboardFilters(BaseModel):
     seasons: List[str] = []
     teams: List[Dict[str, Any]] = []
     gameweeks: List[int] = []
+
+
+# --- Advanced Analytics Schemas ---
+
+class SquadMember(BaseModel):
+    """Individual player summary for team view."""
+    player_id: int
+    name: str
+    position: str
+    total_points: int
+    goals: int
+    assists: int
+    minutes: int
+    now_cost: float
+    form: float  # Avg pts last 5
+    pts_per_90: float
+    consistency: float  # std dev or % reliability
+    
+    # Understat analytics
+    xG: Optional[float] = 0.0
+    xA: Optional[float] = 0.0
+    xG_per_90: Optional[float] = 0.0
+    xA_per_90: Optional[float] = 0.0
+
+
+class TeamSquadResponse(BaseModel):
+    """Full squad details for a team."""
+    team_name: str
+    season: str
+    players: List[SquadMember]
+
+
+class StandingEntry(BaseModel):
+    """League table entry."""
+    rank: int
+    team_name: str
+    played: int
+    wins: int
+    draws: int
+    losses: int
+    goals_for: int
+    goals_against: int
+    goal_diff: int
+    points: int
+    clean_sheets: int
+    
+    # Understat team metrics
+    xG_for: Optional[float] = 0.0
+    xG_against: Optional[float] = 0.0
+    xPts: Optional[float] = 0.0
+
+
+class StandingsResponse(BaseModel):
+    """League table response."""
+    season: str
+    standings: List[StandingEntry]
+
+
+class PlayerTrendPoint(BaseModel):
+    """GW breakdown for a single player."""
+    gameweek: int
+    points: int
+    minutes: int
+    goals: int
+    assists: int
+    value: float
+    opponent: str
+    was_home: bool
+    
+    # Understat
+    xG: Optional[float] = 0.0
+    xA: Optional[float] = 0.0
+
+
+class PlayerTrendsResponse(BaseModel):
+    """Historical performance for a player."""
+    player_id: int
+    player_name: str
+    team_name: str
+    trend: List[PlayerTrendPoint]
+    overall_form: float
+
+
+class GlobalSearchFilters(BaseModel):
+    """Filters for global player lookup."""
+    name: Optional[str] = None
+    team_id: Optional[int] = None
+    position: Optional[str] = None
+    season: str = "2024-25"
+    min_points: Optional[int] = None
+    min_minutes: Optional[int] = None
+    sort_by: str = "total_points"  # total_points, form, xG, etc.
+    order: str = "desc"

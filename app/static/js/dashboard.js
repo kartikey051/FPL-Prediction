@@ -1,370 +1,313 @@
 /**
- * FPL Dashboard JavaScript
- * Handles API calls, Chart.js initialization, and UI updates
+ * FPL Data Dashboard Logic
+ * Features: Canonical Trends, Understat Fusion, Decoupled Search
  */
 
-// Configuration
-const API_BASE = '';
-let charts = {};
+let state = {
+    view: 'overview',
+    season: '2024-25',
+    team_id: '',
+    token: localStorage.getItem('fpl_token'),
+    charts: {},
+    search: {
+        name: '',
+        pos: '',
+        sort: 'total_points'
+    }
+};
 
-// Auth check
-const token = localStorage.getItem('fpl_token');
-if (!token) {
-    window.location.href = '/';
-}
-
-// API Helper
-async function apiCall(endpoint, options = {}) {
-    const defaultOptions = {
+// API Gateway
+async function apiCall(endpoint, method = 'GET', body = null) {
+    const options = {
+        method,
         headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${state.token}`,
             'Content-Type': 'application/json',
-        },
+        }
     };
-    
-    const response = await fetch(`${API_BASE}${endpoint}`, { ...defaultOptions, ...options });
-    
+    if (body) options.body = JSON.stringify(body);
+
+    const url = new URL(`${window.location.origin}${endpoint}`);
+    if (method === 'GET' && !url.searchParams.has('season') && state.season) {
+        url.searchParams.set('season', state.season);
+    }
+
+    const response = await fetch(url.toString(), options);
     if (response.status === 401) {
         localStorage.removeItem('fpl_token');
         window.location.href = '/';
         return null;
     }
-    
     return response.json();
 }
 
-// Chart.js configuration
-Chart.defaults.color = '#a0a0b0';
-Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.05)';
-Chart.defaults.font.family = "'Inter', sans-serif";
+/** --- View Orchestration --- **/
 
-const chartColors = {
-    purple: '#7c3aed',
-    blue: '#3b82f6',
-    green: '#10b981',
-    orange: '#f59e0b',
-    pink: '#ec4899',
-    cyan: '#06b6d4',
+function setView(viewId) {
+    state.view = viewId;
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.toggle('active', i.dataset.view === viewId));
+    document.querySelectorAll('.view-section').forEach(s => s.classList.toggle('d-none', s.id !== `view-${viewId}`));
+
+    // UI Helpers
+    document.getElementById('searchContainer').classList.toggle('d-none', viewId !== 'discovery');
+
+    const titles = {
+        overview: ['Dashboard Overview', 'Key Performance Indicators'],
+        trends: ['Performance Trends', 'Gap-free volatility tracking'],
+        discovery: ['Player Discovery', 'Global lookup across all teams'],
+        teams: ['Squad Analytics', 'Team productivity matrix'],
+        standings: ['League Standings', 'Performance-based table']
+    };
+
+    if (titles[viewId]) {
+        document.getElementById('viewTitle').textContent = titles[viewId][0];
+        document.getElementById('viewSubtitle').textContent = titles[viewId][1];
+    }
+
+    refreshData();
+}
+
+/** --- Data Pipelines --- **/
+
+async function refreshData() {
+    const loader = document.getElementById('loadingState');
+    const content = document.getElementById('dashboardContent');
+
+    loader.classList.remove('d-none');
+    content.classList.add('d-none');
+
+    try {
+        if (state.view === 'overview') await loadOverview();
+        if (state.view === 'trends') await loadTrends();
+        if (state.view === 'discovery') await loadDiscovery();
+        if (state.view === 'teams') await loadTeams();
+        if (state.view === 'standings') await loadStandings();
+    } catch (e) {
+        console.error("Data Link Failure:", e);
+    } finally {
+        loader.classList.add('d-none');
+        content.classList.remove('d-none');
+    }
+}
+
+async function loadOverview() {
+    const q = state.team_id ? `?team_id=${state.team_id}` : '';
+    const [summary, trends, dist] = await Promise.all([
+        apiCall(`/dashboard/summary${q}`),
+        apiCall(`/dashboard/trends${q}`),
+        apiCall(`/dashboard/distributions`)
+    ]);
+
+    updateKPIs(summary);
+    renderTrendChart(trends);
+    renderPosDist(dist);
+}
+
+async function loadTrends() {
+    const q = state.team_id ? `?team_id=${state.team_id}` : '';
+    const trends = await apiCall(`/dashboard/trends${q}`);
+    renderVolatilityChart(trends);
+}
+
+async function loadDiscovery() {
+    const results = await apiCall('/dashboard/search/players', 'POST', {
+        name: state.search.name,
+        position: state.search.pos,
+        season: state.season,
+        sort_by: state.search.sort
+    });
+
+    const body = document.querySelector('#discoveryTable tbody');
+    body.innerHTML = results.map(p => `
+        <tr class="cursor-pointer" onclick="showMetrics(${p.player_id})">
+            <td><div class="fw-bold">${p.player_name}</div></td>
+            <td><small class="text-muted">${p.team_name}</small></td>
+            <td><span class="metric-value text-info">${p.total_points}</span></td>
+            <td><span class="text-warning">${(p.total_points / 38).toFixed(1)}</span></td>
+            <td><button class="btn btn-sm btn-outline-primary">Metrics</button></td>
+        </tr>
+    `).join('');
+}
+
+async function loadTeams() {
+    const container = document.getElementById('teamSquadContainer');
+    const hint = document.getElementById('teamSelectionHint');
+
+    if (!state.team_id) {
+        container.classList.add('d-none');
+        hint.classList.remove('d-none');
+        return;
+    }
+
+    hint.classList.add('d-none');
+    container.classList.remove('d-none');
+
+    const res = await apiCall(`/dashboard/teams/${state.team_id}/squad`);
+    document.getElementById('teamTotalPoints').textContent = res.players.reduce((s, p) => s + p.total_points, 0).toLocaleString();
+
+    const body = document.querySelector('#squadTable tbody');
+    body.innerHTML = res.players.map(p => `
+        <tr onclick="showMetrics(${p.player_id})" class="cursor-pointer">
+            <td><div>${p.name}</div><span class="badge bg-secondary" style="font-size:0.6rem">${p.position}</span></td>
+            <td><span class="metric-value">${p.total_points}</span></td>
+            <td><small>${p.goals}G / ${p.assists}A</small></td>
+            <td>${p.now_cost.toFixed(1)}</td>
+            <td class="row-understat">
+                <span class="metric-value text-info">${(p.xG !== null && p.xG > 0) ? p.xG.toFixed(2) : '—'}</span>
+                <span class="text-muted small">/ ${(p.xA !== null && p.xA > 0) ? p.xA.toFixed(2) : '—'}</span>
+            </td>
+            <td>${p.pts_per_90 ? p.pts_per_90.toFixed(2) : '0.00'}</td>
+        </tr>
+    `).join('');
+}
+
+async function loadStandings() {
+    const res = await apiCall('/dashboard/standings');
+    const body = document.querySelector('#standingsTable tbody');
+    body.innerHTML = res.standings.map(s => `
+        <tr>
+            <td class="fw-bold text-center">${s.rank}</td>
+            <td class="text-start">${s.team_name}</td>
+            <td>${s.played}</td>
+            <td><small>${s.wins}-${s.draws}-${s.losses}</small></td>
+            <td>${s.goal_diff > 0 ? '+' : ''}${s.goal_diff}</td>
+            <td class="fw-bold text-info">${s.points}</td>
+            <td class="row-understat text-info">
+                <span class="metric-value">${(s.xG_for !== null && s.xG_for > 0) ? s.xG_for.toFixed(1) : '—'}</span>
+                <span class="text-muted"> / </span>
+                <span class="metric-value text-danger">${(s.xG_against !== null && s.xG_against > 0) ? s.xG_against.toFixed(1) : '—'}</span>
+            </td>
+        </tr>
+    `).join('');
+}
+
+/** --- Modal & Charts --- **/
+
+window.showMetrics = async function (pid) {
+    const res = await apiCall(`/dashboard/players/${pid}/trends`);
+    document.getElementById('playerModalTitle').textContent = res.player_name;
+
+    // Stats Detail
+    const stats = document.getElementById('playerStatsDetail');
+    const totalXG = res.trend.reduce((s, t) => s + t.xG, 0).toFixed(2);
+    const totalPoints = res.trend.reduce((s, t) => s + t.points, 0);
+    stats.innerHTML = `
+        <div class="row g-2">
+            <div class="col-6"><span class="metric-label">Actual Pts</span><div class="metric-value h5">${totalPoints}</div></div>
+            <div class="col-6"><span class="metric-label">Expected xG</span><div class="metric-value h5 text-info">${totalXG}</div></div>
+            <div class="col-6"><span class="metric-label">Mean Form</span><div class="metric-value h5">${res.overall_form || '-'}</div></div>
+            <div class="col-6"><span class="metric-label">Max GW</span><div class="metric-value h5">${res.trend.length}</div></div>
+        </div>
+    `;
+
+    const modal = new bootstrap.Modal(document.getElementById('playerModal'));
+    modal.show();
+
+    // Modal Chart
+    const ctx = document.getElementById('playerTrendChart').getContext('2d');
+    if (state.charts.player) state.charts.player.destroy();
+    state.charts.player = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: res.trend.map(t => `GW${t.gameweek}`),
+            datasets: [
+                { label: 'Points', data: res.trend.map(t => t.points), backgroundColor: '#7c3aed', borderRadius: 4 },
+                { label: 'xG (Understat)', data: res.trend.map(t => t.xG), type: 'line', borderColor: '#06b6d4', tension: 0.3 }
+            ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
+    });
 };
 
-// Initialize Dashboard
-async function initDashboard() {
-    try {
-        // Fetch user info
-        const user = await apiCall('/auth/me');
-        if (user) {
-            document.getElementById('usernameDisplay').textContent = user.username;
-        }
-        
-        // Fetch filters
-        const filters = await apiCall('/dashboard/filters');
-        populateFilters(filters);
-        
-        // Load dashboard data
-        await loadDashboardData();
-        
-        // Show content
-        document.getElementById('loadingState').classList.add('d-none');
-        document.getElementById('dashboardContent').classList.remove('d-none');
-        
-    } catch (error) {
-        console.error('Dashboard initialization failed:', error);
-    }
-}
-
-// Populate filter dropdowns
-function populateFilters(filters) {
-    const teamSelect = document.getElementById('teamFilter');
-    
-    if (filters.teams) {
-        filters.teams.forEach(team => {
-            const option = document.createElement('option');
-            option.value = team.id;
-            option.textContent = team.name;
-            teamSelect.appendChild(option);
-        });
-    }
-    
-    teamSelect.addEventListener('change', () => loadDashboardData());
-}
-
-// Load all dashboard data
-async function loadDashboardData() {
-    const teamId = document.getElementById('teamFilter').value;
-    const queryParam = teamId ? `?team_id=${teamId}` : '';
-    
-    try {
-        const [summary, trends, distributions, topPlayers] = await Promise.all([
-            apiCall(`/dashboard/summary${queryParam}`),
-            apiCall(`/dashboard/trends${queryParam}`),
-            apiCall(`/dashboard/distributions${queryParam}`),
-            apiCall('/dashboard/top-players?limit=10'),
-        ]);
-        
-        updateKPIs(summary);
-        updateTrendChart(trends);
-        updatePositionChart(distributions);
-        updateTeamGoalsChart(distributions);
-        updateTopPlayersTable(topPlayers);
-        updateGoalsAssistsChart(trends);
-        
-    } catch (error) {
-        console.error('Failed to load dashboard data:', error);
-    }
-}
-
-// Update KPI cards
-function updateKPIs(summary) {
-    document.getElementById('totalPlayers').textContent = summary.total_players?.toLocaleString() || 0;
-    document.getElementById('totalTeams').textContent = summary.total_teams || 0;
-    document.getElementById('totalGoals').textContent = summary.total_goals?.toLocaleString() || 0;
-    document.getElementById('avgPoints').textContent = summary.avg_points_per_player?.toFixed(1) || 0;
-}
-
-// Trend Chart (Points by Gameweek)
-function updateTrendChart(trends) {
+function renderTrendChart(t) {
     const ctx = document.getElementById('trendChart').getContext('2d');
-    
-    if (charts.trend) {
-        charts.trend.destroy();
-    }
-    
-    const labels = trends.data.map(d => `GW ${d.gameweek}`);
-    const points = trends.data.map(d => d.total_points);
-    
-    charts.trend = new Chart(ctx, {
+    if (state.charts.trend) state.charts.trend.destroy();
+    state.charts.trend = new Chart(ctx, {
         type: 'line',
         data: {
-            labels,
-            datasets: [{
-                label: 'Total Points',
-                data: points,
-                borderColor: chartColors.purple,
-                backgroundColor: 'rgba(124, 58, 237, 0.1)',
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-                pointBackgroundColor: chartColors.purple,
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-            }],
+            labels: t.data.map(d => `GW${d.gameweek}`),
+            datasets: [{ label: 'Pts', data: t.data.map(d => d.total_points), borderColor: '#7c3aed', fill: true, backgroundColor: 'rgba(124,58,237,0.1)', tension: 0.4 }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.05)',
-                    },
-                },
-                x: {
-                    grid: {
-                        display: false,
-                    },
-                },
-            },
-        },
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
     });
 }
 
-// Position Distribution (Pie Chart)
-function updatePositionChart(distributions) {
+function renderPosDist(d) {
     const ctx = document.getElementById('positionChart').getContext('2d');
-    
-    if (charts.position) {
-        charts.position.destroy();
-    }
-    
-    const labels = distributions.by_position.map(d => d.position);
-    const data = distributions.by_position.map(d => d.player_count);
-    
-    charts.position = new Chart(ctx, {
+    if (state.charts.pos) state.charts.pos.destroy();
+
+    // Use actual data if available, fallback to defaults just in case
+    const labels = d.by_position.length ? d.by_position.map(p => p.position) : ['GKP', 'DEF', 'MID', 'FWD'];
+    const values = d.by_position.length ? d.by_position.map(p => p.player_count) : [0, 0, 0, 0];
+
+    state.charts.pos = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels,
+            labels: labels,
             datasets: [{
-                data,
-                backgroundColor: [
-                    chartColors.purple,
-                    chartColors.blue,
-                    chartColors.green,
-                    chartColors.orange,
-                ],
-                borderWidth: 0,
-            }],
+                data: values,
+                backgroundColor: ['#7c3aed', '#3b82f6', '#10b981', '#f59e0b'],
+                borderWidth: 0
+            }]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        padding: 20,
-                        usePointStyle: true,
-                        pointStyle: 'circle',
-                    },
-                },
-            },
-            cutout: '60%',
-        },
+        options: { responsive: true, maintainAspectRatio: false, cutout: '80%' }
     });
 }
 
-// Team Goals Chart (Bar Chart)
-function updateTeamGoalsChart(distributions) {
-    const ctx = document.getElementById('teamGoalsChart').getContext('2d');
-    
-    if (charts.teamGoals) {
-        charts.teamGoals.destroy();
-    }
-    
-    // Top 10 teams by goals
-    const topTeams = distributions.by_team
-        .sort((a, b) => b.total_goals - a.total_goals)
-        .slice(0, 10);
-    
-    const labels = topTeams.map(d => d.team_name);
-    const data = topTeams.map(d => d.total_goals);
-    
-    charts.teamGoals = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels,
-            datasets: [{
-                label: 'Goals',
-                data,
-                backgroundColor: createGradient(ctx, chartColors.blue, chartColors.cyan),
-                borderRadius: 8,
-                borderSkipped: false,
-            }],
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    display: false,
-                },
-            },
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.05)',
-                    },
-                },
-                y: {
-                    grid: {
-                        display: false,
-                    },
-                },
-            },
-        },
-    });
-}
-
-// Goals & Assists Trend Chart
-function updateGoalsAssistsChart(trends) {
+function renderVolatilityChart(t) {
     const ctx = document.getElementById('goalsAssistsChart').getContext('2d');
-    
-    if (charts.goalsAssists) {
-        charts.goalsAssists.destroy();
-    }
-    
-    const labels = trends.data.map(d => `GW ${d.gameweek}`);
-    const goals = trends.data.map(d => d.total_goals);
-    const assists = trends.data.map(d => d.total_assists);
-    
-    charts.goalsAssists = new Chart(ctx, {
+    if (state.charts.ga) state.charts.ga.destroy();
+    state.charts.ga = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels,
+            labels: t.data.map(d => `GW${d.gameweek}`),
             datasets: [
-                {
-                    label: 'Goals',
-                    data: goals,
-                    backgroundColor: chartColors.green,
-                    borderRadius: 4,
-                },
-                {
-                    label: 'Assists',
-                    data: assists,
-                    backgroundColor: chartColors.blue,
-                    borderRadius: 4,
-                },
-            ],
+                { label: 'Goals', data: t.data.map(d => d.total_goals), backgroundColor: '#10b981' },
+                { label: 'Assists', data: t.data.map(d => d.total_assists), backgroundColor: '#3b82f6' }
+            ]
         },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: {
-                        usePointStyle: true,
-                        pointStyle: 'circle',
-                    },
-                },
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(255, 255, 255, 0.05)',
-                    },
-                },
-                x: {
-                    grid: {
-                        display: false,
-                    },
-                },
-            },
-        },
+        options: { responsive: true, maintainAspectRatio: false }
     });
 }
 
-// Update Top Players Table
-function updateTopPlayersTable(players) {
-    const tbody = document.querySelector('#topPlayersTable tbody');
-    tbody.innerHTML = '';
-    
-    players.forEach((player, index) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td><span class="badge bg-primary">${index + 1}</span></td>
-            <td>${player.player_name}</td>
-            <td>${player.team_name}</td>
-            <td><strong>${player.total_points}</strong></td>
-            <td>${player.total_goals}</td>
-        `;
-        tbody.appendChild(row);
+function updateKPIs(s) {
+    document.getElementById('totalPlayers').textContent = s.total_players.toLocaleString();
+    document.getElementById('totalTeams').textContent = s.total_teams;
+    document.getElementById('totalGoals').textContent = s.total_goals.toLocaleString();
+    document.getElementById('avgPoints').textContent = s.avg_points_per_player.toFixed(1);
+}
+
+/** --- Initialization --- **/
+
+async function init() {
+    const filters = await apiCall('/dashboard/filters');
+
+    // Populate Season
+    const sSel = document.getElementById('seasonFilter');
+    sSel.innerHTML = filters.seasons.map(s => `<option value="${s}">${s}</option>`).join('');
+    sSel.value = state.season;
+
+    // Populate Teams
+    const tSel = document.getElementById('teamFilter');
+    tSel.innerHTML = '<option value="">League-wide</option>' + filters.teams.map(t => `<option value="${t.id}">${t.name}</option>`).join('');
+
+    // Events
+    sSel.addEventListener('change', (e) => { state.season = e.target.value; refreshData(); });
+    tSel.addEventListener('change', (e) => { state.team_id = e.target.value; refreshData(); });
+    document.querySelectorAll('.nav-item').forEach(i => i.addEventListener('click', () => setView(i.dataset.view)));
+
+    // Search Trigger
+    document.getElementById('executeSearch').addEventListener('click', () => {
+        state.search.name = document.getElementById('playerSearch').value;
+        state.search.pos = document.getElementById('posFilter').value;
+        state.search.sort = document.getElementById('sortFilter').value;
+        refreshData();
     });
+
+    // Routing
+    const hash = window.location.hash.substring(1) || 'overview';
+    setView(hash);
 }
 
-// Helper: Create gradient for charts
-function createGradient(ctx, color1, color2) {
-    const gradient = ctx.createLinearGradient(0, 0, 200, 0);
-    gradient.addColorStop(0, color1);
-    gradient.addColorStop(1, color2);
-    return gradient;
-}
-
-// Logout handler
-document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem('fpl_token');
-    window.location.href = '/';
-});
-
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', initDashboard);
+document.addEventListener('DOMContentLoaded', init);
+document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('fpl_token'); window.location.href = '/'; });
