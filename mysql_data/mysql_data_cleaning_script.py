@@ -13,17 +13,21 @@ import pandas as pd
 from sqlalchemy import create_engine, inspect
 import os
 import pickle
+from pathlib import Path
+from dotenv import load_dotenv
 
-
+current_dir = Path(__file__).resolve().parent
+dotenv_path = current_dir.parent / '.env'
+load_dotenv(dotenv_path=dotenv_path)
 
  
 # Establishing connection with the database
 
 
 # Database connection parameters
-user = os.getenv('FPL_DB_USER')
-password = os.getenv('FPL_DB_PASSWORD')
-database = os.getenv('FPL_DB_NAME')
+user = os.getenv('FPL_DB_USER') 
+password = os.getenv('FPL_DB_PASSWORD') 
+database = os.getenv('FPL_DB_NAME') 
 host = os.getenv('DB_HOST')
 port = os.getenv('DB_PORT')
 
