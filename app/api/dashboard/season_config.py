@@ -19,9 +19,10 @@ from typing import Optional, Tuple
 CURRENT_SEASON = "2024-25"
 
 # Seasons with fpl_season_teams table available (verified from ingestion)
-SEASONS_WITH_TEAMS = {"2019-20", "2020-21", "2021-22", "2022-23", "2023-24", "2024-25"}
+SEASONS_WITH_TEAMS = {"2016-17", "2017-18", "2018-19", "2019-20", "2020-21", "2021-22", "2022-23", "2023-24", "2024-25"}
 
 # Seasons with understat data available (INT format, e.g., 2019 for 2019-20)
+# Note: Data ends at 2023-24 season (2023), so 2024-25 (2024) is not supported.
 UNDERSTAT_SEASONS = {2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024}
 
 
@@ -212,21 +213,34 @@ def get_season_mode(season: str) -> str:
     return "current" if season == CURRENT_SEASON else "historical"
 
 
-def build_standings_xg_query(season_year: int) -> str:
+def build_standings_xg_query(season_year: int, col_home: str = "team_h", col_away: str = "team_a") -> str:
     """
-    Build query to fetch Team xG stats for standings.
+    Build query to fetch Team xG stats for standings with dynamic columns.
+    Refactored to avoid 'Unknown column' error by aliasing in subquery.
     """
     return f"""
         SELECT 
             team_name,
-            SUM(CASE WHEN team_h = team_name THEN h_xg ELSE a_xg END) as xG_for,
-            SUM(CASE WHEN team_h = team_name THEN a_xg ELSE h_xg END) as xG_against,
-            SUM(CASE WHEN team_h = team_name THEN h_goals ELSE a_goals END) as goals_for,
-            SUM(CASE WHEN team_h = team_name THEN a_goals ELSE h_goals END) as goals_against
+            SUM(xg_for) as xG_for,
+            SUM(xg_against) as xG_against,
+            SUM(goals_for) as goals_for,
+            SUM(goals_against) as goals_against
         FROM (
-            SELECT team_h as team_name, h_xg, a_xg, h_goals, a_goals FROM understat_team_metrics WHERE season = {season_year}
+            SELECT 
+                {col_home} as team_name, 
+                h_xg as xg_for, 
+                a_xg as xg_against, 
+                h_goals as goals_for, 
+                a_goals as goals_against 
+            FROM understat_team_metrics WHERE season = {season_year}
             UNION ALL
-            SELECT team_a as team_name, a_xg, h_xg, a_goals, h_goals FROM understat_team_metrics WHERE season = {season_year}
+            SELECT 
+                {col_away} as team_name, 
+                a_xg as xg_for, 
+                h_xg as xg_against, 
+                a_goals as goals_for, 
+                h_goals as goals_against 
+            FROM understat_team_metrics WHERE season = {season_year}
         ) all_matches
         GROUP BY team_name
     """

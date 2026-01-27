@@ -39,6 +39,14 @@ body {
     overflow-x: hidden;
 }
 
+.text-muted {
+    color: var(--text-secondary) !important;
+}
+
+.small.text-muted {
+    opacity: 0.8;
+}
+
 /* ===================== Auth Pages ===================== */
 .auth-page {
     background: linear-gradient(135deg, var(--bg-primary) 0%, #16213e 100%);

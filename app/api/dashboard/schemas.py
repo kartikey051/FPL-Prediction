@@ -28,8 +28,8 @@ class TrendDataPoint(BaseModel):
     avg_minutes: float
     
     # Understat additions
-    total_xG: Optional[float] = 0.0
-    total_xA: Optional[float] = 0.0
+    total_xG: Optional[float] = None
+    total_xA: Optional[float] = None
 
 
 class TrendsResponse(BaseModel):
@@ -70,6 +70,8 @@ class TopPlayer(BaseModel):
     total_points: int
     total_goals: int
     total_assists: int
+    xG: Optional[float] = None
+    xA: Optional[float] = None
 
 
 class DashboardFilters(BaseModel):
@@ -96,10 +98,10 @@ class SquadMember(BaseModel):
     consistency: float  # std dev or % reliability
     
     # Understat analytics
-    xG: Optional[float] = 0.0
-    xA: Optional[float] = 0.0
-    xG_per_90: Optional[float] = 0.0
-    xA_per_90: Optional[float] = 0.0
+    xG: Optional[float] = None
+    xA: Optional[float] = None
+    xG_per_90: Optional[float] = None
+    xA_per_90: Optional[float] = None
 
 
 class TeamSquadResponse(BaseModel):
@@ -124,9 +126,9 @@ class StandingEntry(BaseModel):
     clean_sheets: int
     
     # Understat team metrics
-    xG_for: Optional[float] = 0.0
-    xG_against: Optional[float] = 0.0
-    xPts: Optional[float] = 0.0
+    xG_for: Optional[float] = None
+    xG_against: Optional[float] = None
+    xPts: Optional[float] = None
 
 
 class StandingsResponse(BaseModel):
@@ -147,8 +149,8 @@ class PlayerTrendPoint(BaseModel):
     was_home: bool
     
     # Understat
-    xG: Optional[float] = 0.0
-    xA: Optional[float] = 0.0
+    xG: Optional[float] = None
+    xA: Optional[float] = None
 
 
 class PlayerTrendsResponse(BaseModel):

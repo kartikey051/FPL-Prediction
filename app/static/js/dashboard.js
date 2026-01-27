@@ -121,7 +121,7 @@ async function loadDiscovery() {
     body.innerHTML = results.map(p => `
         <tr class="cursor-pointer" onclick="showMetrics(${p.player_id})">
             <td><div class="fw-bold">${p.player_name}</div></td>
-            <td><small class="text-muted">${p.team_name}</small></td>
+            <td><span class="text-secondary small fw-medium">${p.team_name}</span></td>
             <td><span class="metric-value text-info">${p.total_points}</span></td>
             <td><span class="text-warning">${(p.total_points / 38).toFixed(1)}</span></td>
             <td><button class="btn btn-sm btn-outline-primary">Metrics</button></td>
@@ -280,6 +280,21 @@ function updateKPIs(s) {
 /** --- Initialization --- **/
 
 async function init() {
+    // Basic Auth Check & User Info
+    if (!state.token) {
+        window.location.href = '/';
+        return;
+    }
+
+    try {
+        const user = await apiCall('/auth/me');
+        if (user && user.username) {
+            document.getElementById('usernameDisplay').textContent = user.username;
+        }
+    } catch (e) {
+        console.warn("User info fetch failed:", e);
+    }
+
     const filters = await apiCall('/dashboard/filters');
 
     // Populate Season
