@@ -18,3 +18,8 @@ fbref_premier_player_data_insider01/
 fbref_player_match_logs/
 
 .env
+
+cleaned_data.pkl
+correlation_heatmap_roster_df.png 
+master_df.pkl 
+master_table.csv
