@@ -42,7 +42,8 @@ corr_matrix = understat_roster_metrics_df[[
 plt.figure(figsize = (10,8))
 sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f")
 plt.title('Correlation Heatmap: Understat Performance Matrics')
-plt.savefig('correlation_heatmap_roster_df.png')
+# plt.savefig('correlation_heatmap_roster_df.png')
+plt.show()
 
 '''
 The heatmap is used to identify collinearity.
@@ -86,7 +87,7 @@ Scatter plot helps identify outliers.
 - Bottom-left players are over priced(avoid)
 '''
 
- 
+
 # # Feature Engineering
 
 
@@ -129,7 +130,7 @@ merged.head()
 
 
 # Lagged "Last Game" Features
-# Players often have streaks, 
+# Players often have streaks,
 # Capture if a player was subbed early or missed the last game
 
 # Capture the minutes played in previous match
@@ -143,7 +144,7 @@ fact_player_gameweeks_df['started_last_match'] = (fact_player_gameweeks_df['prev
 
 def normalize_name(name):
     """
-    Standardizes names by removing accents, 
+    Standardizes names by removing accents,
     converting to lowercase, and stripping whitespace.
     """
     if pd.isna(name): return ""
@@ -182,12 +183,12 @@ understat_roster_enriched['join_name'] = understat_roster_enriched['player'].app
 master_df = pd.merge(
     fact_player_gameweeks_season,
     understat_roster_enriched[[
-        'join_name', 'season', 'is_home', 
-        'expected_goals', 'expected_assists', 'key_passes', 
+        'join_name', 'season', 'is_home',
+        'expected_goals', 'expected_assists', 'key_passes',
         'xgchain', 'xgbuildup', 'shots', 'understat_match'
     ]],
     on=['join_name', 'season', 'is_home'],
-    how='inner'
+    how='left' # Changed from 'inner' to 'left'
 )
 
 # Final Cleaning
@@ -206,3 +207,5 @@ print(master_df[['player_name', 'event', 'total_points', 'expected_goals', 'expe
 with open('master_df.pkl', 'wb') as f:
     pickle.dump(master_df, f)
 
+unique_players_count = master_df['player_name'].nunique()
+print(f"Number of unique players in master_df: {unique_players_count}")
