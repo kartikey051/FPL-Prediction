@@ -151,11 +151,8 @@ async function loadTeams() {
             <td><div>${p.name}</div><span class="badge bg-secondary" style="font-size:0.6rem">${p.position}</span></td>
             <td><span class="metric-value">${p.total_points}</span></td>
             <td><small>${p.goals}G / ${p.assists}A</small></td>
-            <td>${p.now_cost.toFixed(1)}</td>
-            <td class="row-understat">
-                <span class="metric-value text-info">${(p.xG !== null && p.xG > 0) ? p.xG.toFixed(2) : '—'}</span>
-                <span class="text-muted small">/ ${(p.xA !== null && p.xA > 0) ? p.xA.toFixed(2) : '—'}</span>
-            </td>
+            <td>£${p.now_cost.toFixed(1)}m</td>
+            <td><span class="metric-value text-info">${p.minutes.toLocaleString()}</span></td>
             <td>${p.pts_per_90 ? p.pts_per_90.toFixed(2) : '0.00'}</td>
         </tr>
     `).join('');
@@ -173,9 +170,9 @@ async function loadStandings() {
             <td>${s.goal_diff > 0 ? '+' : ''}${s.goal_diff}</td>
             <td class="fw-bold text-info">${s.points}</td>
             <td class="row-understat text-info">
-                <span class="metric-value">${(s.xG_for !== null && s.xG_for > 0) ? s.xG_for.toFixed(1) : '—'}</span>
+                <span class="metric-value">${s.xG_for !== null ? s.xG_for.toFixed(1) : '—'}</span>
                 <span class="text-muted"> / </span>
-                <span class="metric-value text-danger">${(s.xG_against !== null && s.xG_against > 0) ? s.xG_against.toFixed(1) : '—'}</span>
+                <span class="metric-value text-danger">${s.xG_against !== null ? s.xG_against.toFixed(1) : '—'}</span>
             </td>
         </tr>
     `).join('');
@@ -189,14 +186,14 @@ window.showMetrics = async function (pid) {
 
     // Stats Detail
     const stats = document.getElementById('playerStatsDetail');
-    const totalXG = res.trend.reduce((s, t) => s + t.xG, 0).toFixed(2);
+    const totalMinutes = res.trend.reduce((s, t) => s + t.minutes, 0);
     const totalPoints = res.trend.reduce((s, t) => s + t.points, 0);
     stats.innerHTML = `
         <div class="row g-2">
-            <div class="col-6"><span class="metric-label">Actual Pts</span><div class="metric-value h5">${totalPoints}</div></div>
-            <div class="col-6"><span class="metric-label">Expected xG</span><div class="metric-value h5 text-info">${totalXG}</div></div>
+            <div class="col-6"><span class="metric-label">Total Pts</span><div class="metric-value h5">${totalPoints}</div></div>
+            <div class="col-6"><span class="metric-label">Minutes</span><div class="metric-value h5 text-info">${totalMinutes.toLocaleString()}</div></div>
             <div class="col-6"><span class="metric-label">Mean Form</span><div class="metric-value h5">${res.overall_form || '-'}</div></div>
-            <div class="col-6"><span class="metric-label">Max GW</span><div class="metric-value h5">${res.trend.length}</div></div>
+            <div class="col-6"><span class="metric-label">Gameweeks</span><div class="metric-value h5">${res.trend.length}</div></div>
         </div>
     `;
 
@@ -212,7 +209,7 @@ window.showMetrics = async function (pid) {
             labels: res.trend.map(t => `GW${t.gameweek}`),
             datasets: [
                 { label: 'Points', data: res.trend.map(t => t.points), backgroundColor: '#7c3aed', borderRadius: 4 },
-                { label: 'xG (Understat)', data: res.trend.map(t => t.xG), type: 'line', borderColor: '#06b6d4', tension: 0.3 }
+                { label: 'Minutes', data: res.trend.map(t => t.minutes), type: 'line', borderColor: '#06b6d4', tension: 0.3 }
             ]
         },
         options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }

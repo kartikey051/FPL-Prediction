@@ -1,12 +1,11 @@
 """
-Dashboard Service - Refactored for Correctness (No SQL Joins between FPL/Understat)
+Dashboard Service - Clean Table Architecture
 
-This service implements a Fetcher-Merger pattern:
-1. Fetch FPL data (Source of Truth)
-2. Fetch Understat data (Enrichment)
-3. Merge in Python using normalized names + season context
+This service uses pre-processed clean tables as the source of truth:
+- clean_team_season_metrics: Standings with xG pre-merged
+- FPL fact/dimension tables: Player stats only (no Understat join)
 
-NEVER joins FPL and Understat tables in SQL.
+Refactored to eliminate complex FPL↔Understat SQL joins.
 """
 
 import unicodedata
@@ -37,46 +36,8 @@ def normalize_name(name: str) -> str:
     return n.lower().strip()
 
 
-def normalize_team_name(name: str) -> str:
-    """
-    Normalize FPL team names to match Understat team names.
-    Handles specific aliases like 'Man City' -> 'Manchester City'.
-    """
-    clean_name = normalize_name(name)
-    
-    # Mapping FPL (normalized) -> Understat (normalized)
-    mapping = {
-        "man city": "manchester city",
-        "man utd": "manchester united",
-        "spurs": "tottenham",
-        "nott'm forest": "nottingham forest",
-        "nottingham forest": "nottingham forest", 
-        "newcastle": "newcastle united",
-        "sheffield utd": "sheffield united",
-        "wolves": "wolverhampton wanderers",
-        "wolverhampton": "wolverhampton wanderers",
-        "brighton": "brighton",
-        "leicester": "leicester",
-        "leeds": "leeds",
-        "west ham": "west ham",
-        "stoke": "stoke",
-        "west brom": "west bromwich albion",
-        "swansea": "swansea",
-        "hull": "hull",
-        "bournemouth": "bournemouth",
-        "watford": "watford",
-        "middlesbrough": "middlesbrough",
-        "cardiff": "cardiff",
-        "fulham": "fulham",
-        "huddersfield": "huddersfield",
-        "norwich": "norwich",
-        "qpr": "queens park rangers",
-        "reading": "reading",
-        "wigan": "wigan",
-        # Add more as needed based on observation
-    }
-    
-    return mapping.get(clean_name, clean_name)
+
+
 
 
 def _resolve_team_player_ids(schema: SeasonSchema, team_id: int) -> List[int]:
@@ -109,71 +70,8 @@ def _get_max_gameweek(schema: SeasonSchema) -> int:
         return 38
 
 
-def _fetch_understat_squad_stats(season_year: int) -> Dict[str, Dict[str, float]]:
-    """
-    Fetch Understat squad stats filtered by season.
-    
-    The understat_roster_metrics table has a 'season' column added via
-    the ingestion script (derived from match_link -> match_id -> season).
-    Returns empty dict if no data exists for the requested season.
-    """
-    try:
-        # Check if season column exists in the table
-        check_query = """
-            SELECT COUNT(*) as cnt 
-            FROM information_schema.columns 
-            WHERE table_name = 'understat_roster_metrics' 
-            AND column_name = 'season'
-        """
-        check_result = execute_query(check_query)
-        has_season_col = check_result[0]["cnt"] > 0 if check_result else False
-        
-        if has_season_col:
-            # Check if requested season has data
-            available_query = f"""
-                SELECT COUNT(*) as cnt
-                FROM understat_roster_metrics 
-                WHERE season = {season_year}
-            """
-            available_result = execute_query(available_query)
-            
-            if available_result and available_result[0]["cnt"] == 0:
-                # No data for this season - return empty (show "—" in UI)
-                logger.info(f"No Understat data available for season {season_year}")
-                return {}
-            
-            # Season-specific aggregation
-            query = f"""
-                SELECT 
-                    player, 
-                    SUM(xG) as xg, 
-                    SUM(xA) as xa,
-                    SUM(shots) as shots,
-                    SUM(time) as minutes
-                FROM understat_roster_metrics
-                WHERE season = {season_year}
-                GROUP BY player
-            """
-        else:
-            # No season column - return empty to avoid mismatched data
-            logger.warning("No season column in understat_roster_metrics, skipping xG data")
-            return {}
-        
-        results = execute_query(query)
-        
-        mapping = {}
-        for r in results:
-            norm_name = normalize_name(r["player"])
-            mapping[norm_name] = {
-                "xG": float(r["xg"] or 0),
-                "xA": float(r["xa"] or 0),
-                "shots": int(r["shots"] or 0),
-                "minutes": int(r["minutes"] or 0)
-            }
-        return mapping
-    except Exception as e:
-        logger.warning(f"Understat fetch failed: {e}")
-        return {}
+
+
 
 
 def get_summary_stats(team_id: Optional[int] = None, season: str = CURRENT_SEASON) -> SummaryStats:
@@ -373,7 +271,7 @@ def get_team_squad(team_id: int, season: str = CURRENT_SEASON) -> TeamSquadRespo
                 LEFT JOIN {schema.table_fact} f 
                     ON p.{schema.col_player_table_id} = f.{schema.col_player_id} 
                     {build_season_filter(schema, "f")}
-                WHERE p.{team_col} = %s
+                WHERE p.{team_col} = %s {season_filter}
                 GROUP BY p.{schema.col_player_table_id}, p.first_name, p.second_name, p.element_type
                 ORDER BY total_points DESC
             """
@@ -400,24 +298,12 @@ def get_team_squad(team_id: int, season: str = CURRENT_SEASON) -> TeamSquadRespo
         
         fpl_stats = execute_query(fpl_query, (team_id,))
         
-        # 3. Fetch Understat (Enrichment - Safe Lifetime)
-        # We use a safe aggregation by player name since season filtering is not possible
-        us_metrics = {}
-        if schema.supports_understat:
-            # We pass 0 or any year, as the function now ignores year and gets lifetime stats
-            # But to be clean we pass year if available
-            year = get_understat_season_year(season) or 0
-            us_metrics = _fetch_understat_squad_stats(year)
-                
-        # 4. Merge & Scale
+        # xG/xA removed per refactor requirements - use None (shows "—" in UI)
+        # Player-level xG/xA from Understat is unreliable due to name matching issues
+        
+        # Build squad list from FPL data only
         squad = []
         for p in fpl_stats:
-            norm = normalize_name(p["name"])
-            us = us_metrics.get(norm)
-            
-            xG = round(float(us["xG"]), 2) if us else None
-            xA = round(float(us["xA"]), 2) if us else None
-            
             pts90 = (p["total_points"] / (p["minutes"] / 90)) if p["minutes"] > 90 else 0.0
             
             squad.append(SquadMember(
@@ -432,10 +318,10 @@ def get_team_squad(team_id: int, season: str = CURRENT_SEASON) -> TeamSquadRespo
                 form=0,
                 consistency=0,
                 pts_per_90=round(pts90, 2),
-                xG=xG,
-                xA=xA,
-                xG_per_90=round(xG / (p["minutes"] / 90), 2) if xG and p["minutes"] > 90 else None,
-                xA_per_90=round(xA / (p["minutes"] / 90), 2) if xA and p["minutes"] > 90 else None
+                xG=None,  # Not available at player level
+                xA=None,  # Not available at player level
+                xG_per_90=None,
+                xA_per_90=None
             ))
             
         return TeamSquadResponse(team_name=team_name, season=season, players=squad)
@@ -446,93 +332,42 @@ def get_team_squad(team_id: int, season: str = CURRENT_SEASON) -> TeamSquadRespo
 
 
 def get_league_standings(season: str = CURRENT_SEASON) -> StandingsResponse:
-    """Decoupled Standings: FPL Fixtures + Understat Metrics."""
-    schema = get_season_schema(season)
-    if not schema.supports_standings:
-        return StandingsResponse(season=season, standings=[])
+    """
+    Standings from clean_team_season_metrics table (pre-merged xG data).
     
+    This is the refactored version that uses clean tables instead of
+    complex FPL fixtures + Understat merging.
+    """
     try:
-        # 1. FPL Standings
-        season_filter = build_season_filter(schema, "")
-        fpl_query = f"""
-            WITH MatchPts AS (
-                SELECT team_h as tid, team_h_score as gf, team_a_score as ga,
-                    CASE WHEN team_h_score > team_a_score THEN 3 WHEN team_h_score = team_a_score THEN 1 ELSE 0 END as pts
-                FROM {schema.table_fixtures} WHERE finished = 1 {season_filter}
-                UNION ALL
-                SELECT team_a as tid, team_a_score as gf, team_h_score as ga,
-                    CASE WHEN team_a_score > team_h_score THEN 3 WHEN team_a_score = team_h_score THEN 1 ELSE 0 END as pts
-                FROM {schema.table_fixtures} WHERE finished = 1 {season_filter}
-            )
-            SELECT 
-                t.{schema.col_team_name} as team_name,
-                COUNT(m.tid) as played,
-                SUM(CASE WHEN gf > ga THEN 1 ELSE 0 END) as wins,
-                SUM(CASE WHEN gf = ga THEN 1 ELSE 0 END) as draws,
-                SUM(CASE WHEN gf < ga THEN 1 ELSE 0 END) as losses,
-                SUM(gf) as goals_for,
-                SUM(ga) as goals_against,
-                SUM(gf) - SUM(ga) as goal_diff,
-                SUM(pts) as points
-            FROM {schema.table_teams} t
-            LEFT JOIN MatchPts m ON t.{schema.col_team_id} = m.tid
-            WHERE 1=1 {build_season_filter(schema, "t")}
-            GROUP BY t.{schema.col_team_name}
-            ORDER BY points DESC, goal_diff DESC
+        # Simple query to clean table - xG already merged
+        query = """
+            SELECT
+                team_name,
+                played,
+                wins,
+                draws,
+                losses,
+                gf AS goals_for,
+                ga AS goals_against,
+                gd AS goal_diff,
+                pts AS points,
+                xg_for,
+                xg_against
+            FROM clean_team_season_metrics
+            WHERE season = %s
+            ORDER BY pts DESC, gd DESC, gf DESC
         """
-        fpl_table = execute_query(fpl_query)
+        results = execute_query(query, (season,))
         
-        # 2. Understat xG Table
-        us_table = {}
-        if schema.supports_understat:
-            year = get_understat_season_year(season)
-            if year:
-                xg_query = build_standings_xg_query(year)
-                try:
-                    us_rows = execute_query(xg_query)
-                    for r in us_rows:
-                        us_table[normalize_name(r["team_name"])] = r
-                except Exception as e:
-                    # Retry with smarter dynamic column detection
-                    if "Unknown column" in str(e):
-                        logger.warning(f"Standings fetch failed, attempting dynamic column detection...")
-                        try:
-                            # inspect columns
-                            col_check = execute_query("SELECT * FROM understat_team_metrics LIMIT 1")
-                            if col_check:
-                                keys = list(col_check[0].keys())
-                                logger.info(f"Available Understat columns: {keys}")
-                                
-                                c_home, c_away = "team_h", "team_a" # defaults
-                                
-                                if "home_team" in keys: c_home = "home_team"
-                                elif "h_team" in keys: c_home = "h_team"
-                                elif "home" in keys: c_home = "home"
-                                
-                                if "away_team" in keys: c_away = "away_team"
-                                elif "a_team" in keys: c_away = "a_team"
-                                elif "away" in keys: c_away = "away"
-                                
-                                logger.info(f"Detected Understat columns: {c_home}/{c_away}")
-                                retry_query = build_standings_xg_query(year, c_home, c_away)
-                                us_rows = execute_query(retry_query)
-                                for r in us_rows:
-                                    us_table[normalize_name(r["team_name"])] = r
-                        except Exception as e2:
-                            logger.error(f"Standings retry failed: {e2}")
-                    else:
-                        logger.warning(f"Understat standings fetch failed: {e}")
-
-        # 3. Merge
+        if not results:
+            logger.warning(f"No standings data found for season {season}")
+            return StandingsResponse(season=season, standings=[])
+        
         standings = []
-        for i, row in enumerate(fpl_table):
-            # Use improved normalization for fuzzy matching
-            tn = normalize_team_name(row["team_name"])
-            us = us_table.get(tn)
-            
-            # If still no match, try raw normalized name just in case
-            if not us:
-                us = us_table.get(normalize_name(row["team_name"]))
+        for i, row in enumerate(results):
+            # xG: return None if NULL, never return 0.0 for missing data
+            xg_for = float(row["xg_for"]) if row["xg_for"] is not None else None
+            xg_against = float(row["xg_against"]) if row["xg_against"] is not None else None
             
             standings.append(StandingEntry(
                 rank=i + 1,
@@ -546,8 +381,8 @@ def get_league_standings(season: str = CURRENT_SEASON) -> StandingsResponse:
                 goal_diff=int(row["goal_diff"]),
                 points=int(row["points"]),
                 clean_sheets=0,
-                xG_for=round(float(us["xG_for"]), 2) if us else None,
-                xG_against=round(float(us["xG_against"]), 2) if us else None,
+                xG_for=round(xg_for, 2) if xg_for is not None else None,
+                xG_against=round(xg_against, 2) if xg_against is not None else None,
                 xPts=None
             ))
             
@@ -679,19 +514,9 @@ def get_global_players(filters: GlobalSearchFilters) -> List[TopPlayer]:
     try:
         res = execute_query(query)
         
-        # 4. Enrich with Understat (Lifetime)
-        us_metrics = {}
-        if schema.supports_understat:
-             us_metrics = _fetch_understat_squad_stats(0)
-
+        # xG/xA removed - Understat player merging not reliable
         players = []
         for r in res:
-            norm = normalize_name(r["name"])
-            us = us_metrics.get(norm)
-            
-            xG = round(float(us["xG"]), 2) if us else None
-            xA = round(float(us["xA"]), 2) if us else None
-            
             players.append(TopPlayer(
                 player_id=r["pid"], 
                 player_name=r["name"], 
@@ -699,17 +524,12 @@ def get_global_players(filters: GlobalSearchFilters) -> List[TopPlayer]:
                 total_points=r["total_points"], 
                 total_goals=int(r.get("goals_scored") or 0),
                 total_assists=int(r.get("assists") or 0),
-                xG=xG,
-                xA=xA
+                xG=None,
+                xA=None
             ))
             
-        # 5. Apply Manual Sort if needed
-        if manual_sort_key:
-            reverse = (filters.order.lower() == "desc")
-            # Sort None values to bottom usually, or top if desc? 
-            # Let's treat None as -1 so they go last in DESC sort
-            players.sort(key=lambda x: (getattr(x, manual_sort_key) or -1.0), reverse=reverse)
-            players = players[:50]
+        # Manual sort for xG/xA not applicable (always None now)
+        # Just return the list
             
         return players
     except Exception as e:
