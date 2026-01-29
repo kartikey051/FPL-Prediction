@@ -19,7 +19,9 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from app.core.config import settings
 from app.api.auth.router import router as auth_router
 from app.api.dashboard.router import router as dashboard_router
+from app.api.prediction.router import router as prediction_router
 from app.db.models.user import ensure_users_table
+from app.api.prediction.service import ensure_predictions_table
 from Utils.logging_config import get_logger
 
 logger = get_logger("main")
@@ -56,6 +58,7 @@ templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
 # Include routers
 app.include_router(auth_router)
 app.include_router(dashboard_router)
+app.include_router(prediction_router)
 
 
 @app.on_event("startup")
@@ -64,7 +67,8 @@ async def startup_event():
     logger.info("Starting FPL Dashboard application...")
     try:
         ensure_users_table()
-        logger.info("Database tables initialized")
+        ensure_predictions_table()
+        logger.info("Database tables initialized (users, predictions)")
     except Exception as e:
         logger.error(f"Failed to initialize database: {e}")
         # Don't raise - allow app to start even if DB is down

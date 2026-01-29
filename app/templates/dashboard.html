@@ -74,6 +74,12 @@
                     <span>Standings</span>
                 </a>
             </li>
+            <li class="nav-item" data-view="predictions">
+                <a href="#predictions" class="nav-link">
+                    <i class="bi bi-lightning-fill"></i>
+                    <span>AI Predictions</span>
+                </a>
+            </li>
         </ul>
 
         <div class="sidebar-footer">
@@ -313,6 +319,96 @@
                             </thead>
                             <tbody></tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: PREDICTIONS -->
+            <div id="view-predictions" class="view-section d-none">
+                <!-- Prediction Filters -->
+                <div class="card bg-dark border-secondary p-3 mb-4">
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Max Price (£m)</label>
+                            <input type="number" id="predMaxPrice"
+                                class="form-control bg-transparent border-secondary text-white" placeholder="e.g. 10"
+                                step="0.5" min="4" max="15">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Position</label>
+                            <select id="predPosition" class="form-select bg-transparent border-secondary text-white">
+                                <option value="">All Positions</option>
+                                <option value="GKP">Goalkeepers</option>
+                                <option value="DEF">Defenders</option>
+                                <option value="MID">Midfielders</option>
+                                <option value="FWD">Forwards</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Min Minutes</label>
+                            <input type="number" id="predMinMinutes"
+                                class="form-control bg-transparent border-secondary text-white" value="300" min="0"
+                                step="100">
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label small text-muted">Results</label>
+                            <select id="predLimit" class="form-select bg-transparent border-secondary text-white">
+                                <option value="10">Top 10</option>
+                                <option value="15" selected>Top 15</option>
+                                <option value="25">Top 25</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" id="loadPredictions" onclick="loadPredictions()">
+                                <i class="bi bi-lightning"></i> Get Picks
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-outline-success w-100" id="loadOptimizedSquad"
+                                onclick="loadOptimizedSquad()">
+                                <i class="bi bi-people"></i> Best XI
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="row g-4">
+                    <div class="col-lg-8">
+                        <div class="chart-card">
+                            <div class="chart-header d-flex justify-content-between align-items-center">
+                                <h5><i class="bi bi-stars"></i> Predicted Best Performers</h5>
+                                <small class="text-muted" id="predictionInfo">Model: Weighted Form Analysis</small>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-dark table-hover mb-0" id="predictionsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Player</th>
+                                            <th>Team</th>
+                                            <th>Pos</th>
+                                            <th>Price</th>
+                                            <th class="text-warning">Pred Pts</th>
+                                            <th>Form</th>
+                                            <th>Pts/£m</th>
+                                            <th>Confidence</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chart-card h-100">
+                            <div class="chart-header">
+                                <h5><i class="bi bi-trophy"></i> Optimized Squad</h5>
+                            </div>
+                            <div id="optimizedSquadContent" class="p-3">
+                                <p class="text-muted text-center">Click "Best XI" to generate an optimized squad within
+                                    £100m budget</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

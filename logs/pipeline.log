@@ -39153,3 +39153,37 @@ Exceptions.api_errors.DBWriteError: Could not upsert dataframe into understat_ro
 [2026-01-28 23:04:07,923] ERROR | dashboard_service | Global search error: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
 [2026-01-28 23:07:22,114] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
 [2026-01-28 23:07:22,115] ERROR | dashboard_service | Global search error: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
+[2026-01-28 23:39:44,597] INFO | main | Starting FPL Dashboard application...
+[2026-01-28 23:39:45,085] INFO | user_model | Users table ensured
+[2026-01-28 23:39:45,085] INFO | main | Database tables initialized
+[2026-01-28 23:40:08,991] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
+[2026-01-28 23:40:08,993] ERROR | dashboard_service | Global search error: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
+[2026-01-28 23:40:13,186] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
+[2026-01-28 23:40:13,189] ERROR | dashboard_service | Global search error: 1054 (42S22): Unknown column 'p.goals_scored' in 'field list'
+[2026-01-29 20:41:27,904] INFO | main | Starting FPL Dashboard application...
+[2026-01-29 20:41:32,739] INFO | user_model | Users table ensured
+[2026-01-29 20:41:33,524] INFO | prediction_service | Predictions table ensured
+[2026-01-29 20:41:33,528] INFO | main | Database tables initialized (users, predictions)
+[2026-01-29 20:42:53,173] INFO | main | Starting FPL Dashboard application...
+[2026-01-29 20:42:53,530] INFO | user_model | Users table ensured
+[2026-01-29 20:42:53,674] INFO | prediction_service | Predictions table ensured
+[2026-01-29 20:42:53,675] INFO | main | Database tables initialized (users, predictions)
+[2026-01-29 20:45:13,215] INFO | main | Starting FPL Dashboard application...
+[2026-01-29 20:45:13,611] INFO | user_model | Users table ensured
+[2026-01-29 20:45:13,667] INFO | prediction_service | Predictions table ensured
+[2026-01-29 20:45:13,668] INFO | main | Database tables initialized (users, predictions)
+[2026-01-29 20:54:04,322] INFO | main | Starting FPL Dashboard application...
+[2026-01-29 20:54:04,848] INFO | user_model | Users table ensured
+[2026-01-29 20:54:04,897] INFO | prediction_service | Predictions table ensured
+[2026-01-29 20:54:04,898] INFO | main | Database tables initialized (users, predictions)
+[2026-01-29 21:23:35,260] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:23:35,315] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:23:35,354] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:23:49,625] INFO | prediction_service | Generated predictions for 379 players
+[2026-01-29 21:24:33,501] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:24:33,655] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:24:53,347] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:24:53,488] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:25:30,225] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:26:29,808] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:26:29,949] INFO | prediction_service | Predictions table ensured

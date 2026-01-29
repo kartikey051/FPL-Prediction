@@ -56,7 +56,8 @@ function setView(viewId) {
         trends: ['Performance Trends', 'Gap-free volatility tracking'],
         discovery: ['Player Discovery', 'Global lookup across all teams'],
         teams: ['Squad Analytics', 'Team productivity matrix'],
-        standings: ['League Standings', 'Performance-based table']
+        standings: ['League Standings', 'Performance-based table'],
+        predictions: ['AI Predictions', 'ML-powered player recommendations']
     };
 
     if (titles[viewId]) {
@@ -82,6 +83,7 @@ async function refreshData() {
         if (state.view === 'discovery') await loadDiscovery();
         if (state.view === 'teams') await loadTeams();
         if (state.view === 'standings') await loadStandings();
+        if (state.view === 'predictions') await loadPredictions();
     } catch (e) {
         console.error("Data Link Failure:", e);
     } finally {
@@ -176,6 +178,141 @@ async function loadStandings() {
             </td>
         </tr>
     `).join('');
+}
+
+// --- PREDICTIONS ---
+
+async function loadPredictions() {
+    console.log('loadPredictions called');
+    try {
+        const maxPrice = document.getElementById('predMaxPrice')?.value || '';
+        const position = document.getElementById('predPosition')?.value || '';
+        const minMinutes = document.getElementById('predMinMinutes')?.value || '300';
+        const limit = document.getElementById('predLimit')?.value || '15';
+
+        let url = `/prediction/best-players?limit=${limit}&min_minutes=${minMinutes}`;
+        if (maxPrice) url += `&max_price=${maxPrice}`;
+        if (position) url += `&position=${position}`;
+
+        console.log('Fetching predictions from:', url);
+
+        const res = await apiCall(url);
+        console.log('Prediction response:', res);
+
+        if (!res || !res.players) {
+            console.error('Invalid response:', res);
+            document.querySelector('#predictionsTable tbody').innerHTML =
+                '<tr><td colspan="8" class="text-center text-muted">No predictions available. Try clicking "Get Picks".</td></tr>';
+            return;
+        }
+
+        // Update info
+        document.getElementById('predictionInfo').textContent =
+            `${res.players.length} players | Budget: £${res.total_budget_used.toFixed(1)}m | ${res.prediction_date}`;
+
+        const body = document.querySelector('#predictionsTable tbody');
+
+        if (res.players.length === 0) {
+            body.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No players found matching criteria</td></tr>';
+            return;
+        }
+
+        body.innerHTML = res.players.map((p, i) => {
+            const confBadge = {
+                'HIGH': 'bg-success',
+                'MEDIUM': 'bg-warning text-dark',
+                'LOW': 'bg-secondary'
+            }[p.confidence] || 'bg-secondary';
+
+            return `
+                <tr class="cursor-pointer" onclick="showMetrics(${p.player_id})">
+                    <td>
+                        <span class="badge bg-dark me-2">${i + 1}</span>
+                        <span class="fw-bold">${p.player_name}</span>
+                    </td>
+                    <td><span class="text-secondary small">${p.team_name}</span></td>
+                    <td><span class="badge bg-primary">${p.position}</span></td>
+                    <td>£${p.now_cost.toFixed(1)}m</td>
+                    <td class="text-warning fw-bold">${p.predicted_points.toFixed(1)}</td>
+                    <td><span class="text-info">${p.form.toFixed(1)}</span></td>
+                    <td><span class="text-success">${p.points_per_million.toFixed(2)}</span></td>
+                    <td><span class="badge ${confBadge}">${p.confidence}</span></td>
+                </tr>
+            `;
+        }).join('');
+
+        console.log('Predictions loaded successfully');
+    } catch (error) {
+        console.error('Error loading predictions:', error);
+        document.querySelector('#predictionsTable tbody').innerHTML =
+            '<tr><td colspan="8" class="text-center text-danger">Error loading predictions. Check console.</td></tr>';
+    }
+}
+
+async function loadOptimizedSquad() {
+    console.log('loadOptimizedSquad called');
+    try {
+        const res = await apiCall('/prediction/optimized-squad?max_budget=100&formation=3-4-3');
+        console.log('Optimized squad response:', res);
+
+        if (!res || !res.squad) {
+            console.error('Invalid squad response:', res);
+            document.getElementById('optimizedSquadContent').innerHTML =
+                '<p class="text-center text-danger">Failed to load squad. Check console.</p>';
+            return;
+        }
+
+        const container = document.getElementById('optimizedSquadContent');
+        const positions = ['GKP', 'DEF', 'MID', 'FWD'];
+        const posColors = { 'GKP': '#f59e0b', 'DEF': '#3b82f6', 'MID': '#10b981', 'FWD': '#ef4444' };
+
+        let html = `
+            <div class="mb-3 p-2 bg-dark rounded text-center">
+                <div class="row">
+                    <div class="col-4">
+                        <small class="text-muted">Total Cost</small>
+                        <div class="fw-bold text-info">£${res.total_cost.toFixed(1)}m</div>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted">Remaining</small>
+                        <div class="fw-bold text-success">£${res.budget_remaining.toFixed(1)}m</div>
+                    </div>
+                    <div class="col-4">
+                        <small class="text-muted">Pred Pts</small>
+                        <div class="fw-bold text-warning">${res.total_predicted_points.toFixed(1)}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        positions.forEach(pos => {
+            const players = res.squad[pos] || [];
+            if (players.length > 0) {
+                html += `<div class="mb-2"><span class="badge" style="background:${posColors[pos]}">${pos}</span></div>`;
+                players.forEach(p => {
+                    html += `
+                        <div class="d-flex justify-content-between align-items-center py-1 border-bottom border-secondary">
+                            <div>
+                                <span class="small fw-medium">${p.player_name}</span>
+                                <br><span class="text-muted" style="font-size:0.7rem">${p.team_name}</span>
+                            </div>
+                            <div class="text-end">
+                                <span class="text-warning fw-bold">${p.predicted_points.toFixed(1)}</span>
+                                <br><span class="text-muted" style="font-size:0.7rem">£${p.now_cost.toFixed(1)}m</span>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+        });
+
+        container.innerHTML = html;
+        console.log('Optimized squad loaded successfully');
+    } catch (error) {
+        console.error('Error loading optimized squad:', error);
+        document.getElementById('optimizedSquadContent').innerHTML =
+            '<p class="text-center text-danger">Error loading squad. Check console.</p>';
+    }
 }
 
 /** --- Modal & Charts --- **/
@@ -316,6 +453,10 @@ async function init() {
         refreshData();
     });
 
+    // Prediction Triggers
+    document.getElementById('loadPredictions')?.addEventListener('click', loadPredictions);
+    document.getElementById('loadOptimizedSquad')?.addEventListener('click', loadOptimizedSquad);
+
     // Routing
     const hash = window.location.hash.substring(1) || 'overview';
     setView(hash);
@@ -323,3 +464,7 @@ async function init() {
 
 document.addEventListener('DOMContentLoaded', init);
 document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('fpl_token'); window.location.href = '/'; });
+
+// Expose prediction functions globally for onclick handlers
+window.loadPredictions = loadPredictions;
+window.loadOptimizedSquad = loadOptimizedSquad;
