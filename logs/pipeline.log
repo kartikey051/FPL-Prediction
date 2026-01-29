@@ -39187,3 +39187,345 @@ Exceptions.api_errors.DBWriteError: Could not upsert dataframe into understat_ro
 [2026-01-29 21:25:30,225] INFO | prediction_service | Predictions table ensured
 [2026-01-29 21:26:29,808] INFO | prediction_service | Predictions table ensured
 [2026-01-29 21:26:29,949] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:33:12,410] INFO | main | Starting FPL Dashboard application...
+[2026-01-29 21:33:12,934] INFO | user_model | Users table ensured
+[2026-01-29 21:33:12,979] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:33:12,981] INFO | main | Database tables initialized (users, predictions)
+[2026-01-29 21:33:33,193] INFO | auth_service | User authenticated: kaka_patil
+[2026-01-29 21:34:18,841] WARNING | dashboard_service | No standings data found for season 2016-17
+[2026-01-29 21:34:23,048] WARNING | dashboard_service | No standings data found for season 2018-19
+[2026-01-29 21:34:34,571] WARNING | dashboard_service | No standings data found for season 2018-19
+[2026-01-29 21:34:41,554] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:34:41,587] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:34:41,629] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:34:41,679] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:34:41,688] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:34:41,689] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:11,003] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:11,036] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:11,076] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:11,108] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:11,110] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:11,111] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:11,212] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:11,241] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:11,281] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:11,321] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:11,324] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:11,324] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:16,613] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:16,641] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:16,674] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:16,699] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:16,702] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:16,702] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:16,793] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:16,823] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:16,854] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:16,882] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:16,884] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:16,885] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:17,461] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:17,493] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:17,524] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:17,554] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:17,556] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:17,557] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:17,686] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:17,730] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:17,782] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:17,819] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:17,822] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:17,824] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:17,921] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:17,948] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:17,983] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:18,009] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:18,011] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:18,012] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:18,107] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:18,129] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:18,156] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:18,179] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:18,181] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:18,181] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:19,192] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,221] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:19,253] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,280] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,283] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,283] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:19,418] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,449] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:19,486] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,515] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,517] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,518] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:19,663] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,704] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:19,742] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,775] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,777] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:19,778] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:19,897] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:19,930] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:19,972] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,000] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,002] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,003] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:20,114] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,142] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:20,179] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,205] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,207] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,208] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:20,316] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,346] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:20,381] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,405] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,407] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,407] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:20,505] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,534] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:20,569] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,603] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,607] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,608] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:20,724] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,754] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:20,790] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:20,820] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,823] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:20,823] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:23,302] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,332] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:23,371] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,402] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,404] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,405] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:23,522] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,552] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:23,588] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,617] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,619] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,620] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:23,720] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,757] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:23,796] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,829] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,831] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:23,832] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:23,955] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:23,987] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:24,024] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:24,056] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:24,058] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:24,059] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:49,134] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:49,162] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:49,202] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:49,231] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:49,234] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:49,234] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:49,341] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:49,370] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:49,400] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:49,425] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:49,427] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:49,428] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:56,452] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:56,483] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:56,518] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:56,541] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:56,543] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:56,544] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:56,638] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:56,668] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:56,699] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:56,724] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:56,725] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:56,726] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:57,227] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,255] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:57,284] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,312] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,314] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,315] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:57,412] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,436] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:57,462] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,484] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,486] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,487] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:57,598] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,628] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:57,663] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,694] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,697] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,698] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:57,797] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,822] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:57,850] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,877] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,879] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:57,880] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:57,973] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:57,998] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:58,032] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:58,056] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:58,058] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:58,059] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:35:58,222] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:58,243] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:35:58,276] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:35:58,296] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:58,298] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:35:58,299] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:01,260] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:01,289] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:01,325] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:01,352] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:01,354] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:01,354] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:01,445] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:01,472] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:01,505] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:01,531] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:01,533] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:01,534] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:02,352] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,383] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:02,415] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,439] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,441] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,441] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:02,545] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,573] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:02,609] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,636] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,638] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,639] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:02,730] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,754] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:02,786] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,810] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,812] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,813] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:02,899] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,928] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:02,964] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:02,990] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,991] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:02,992] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,101] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,132] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:03,179] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,206] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,209] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,209] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,318] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,343] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:03,375] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,398] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,400] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,401] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,493] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,520] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:03,552] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,576] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,578] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,578] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,670] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,694] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:03,725] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,745] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,747] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,747] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,825] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,848] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:03,874] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:03,893] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,895] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:03,895] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:03,980] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:04,006] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:04,043] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:04,075] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:04,077] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:04,078] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:18,151] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:18,181] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:18,218] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:18,244] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:18,247] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:18,248] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:18,405] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:18,432] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:18,464] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:18,491] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:18,493] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:18,494] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:18,968] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:18,992] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,022] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,048] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,050] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,051] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:19,154] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,181] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,210] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,233] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,235] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,236] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:19,408] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,432] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,460] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,486] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,488] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,488] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:19,584] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,608] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,644] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,670] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,672] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,673] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:19,767] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,796] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,829] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,850] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,852] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:19,853] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:19,937] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:19,959] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:19,990] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:20,012] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,014] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,014] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:20,108] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:20,139] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:20,175] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:20,200] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,202] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,203] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:20,288] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:20,311] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:20,339] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:20,361] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,362] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:20,363] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:23,819] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:32,801] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:32,829] INFO | prediction_service | No predictions for today, generating...
+[2026-01-29 21:36:32,863] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:32,890] ERROR | db_session | Database connection failed: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:32,892] ERROR | prediction_service | Failed to fetch player stats: 1054 (42S22): Unknown column 'p.form' in 'field list'
+[2026-01-29 21:36:32,892] WARNING | prediction_service | No players found for prediction
+[2026-01-29 21:36:35,561] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:51,255] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:36:51,392] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:37:00,065] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:37:00,199] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:37:05,974] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:37:06,109] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:39:05,860] INFO | prediction_service | Predictions table ensured
+[2026-01-29 21:39:06,022] INFO | prediction_service | Predictions table ensured

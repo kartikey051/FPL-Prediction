@@ -23,3 +23,4 @@ cleaned_data.pkl
 correlation_heatmap_roster_df.png 
 master_df.pkl 
 master_table.csv
+pipeline.log
